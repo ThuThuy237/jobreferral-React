@@ -1,81 +1,123 @@
-import React, { Component } from 'react'
-import '../Styles/LoginStyle.css'
-import { Form, Input, Button } from 'antd';
+import React from 'react'
+import myStyles from '../Styles/LoginStyle.module.scss';
+import { Form, Input, Button, notification, Divider } from 'antd';
 import { NavLink } from 'react-router-dom';
-import MyHeader from '../Components/MyHeader'
-import icGoogle from '../Assets/Images/iconGoogle.svg';
+import { actLogin, actLoginGG } from '../reducers/Login/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import { FcGoogle } from 'react-icons/fc';
+import { GoogleLogin } from 'react-google-login';
+import tt from '../Assets/Images/tt.png';
 
+export default function Login() {
+    let history = useHistory();
+    
+    const dispatch = useDispatch();
 
-export default class Login extends Component {
-    render() {
-        const onFinish = (values) => {
-            console.log('Success:', values);
-        };
+    const { err } = useSelector(state => state.LoginReducer);
+    const openNotification = (mess, description) => {
+        notification.open({
+            message: mess,
+            description:
+                description,
+            placement: 'bottomRight',
+            type: 'error',
+            style: {
+                width: 400,
+            },
+        });
+    };
+    const onFinish = (values) => {
+        let user = values;
+        const action = actLogin(user, history);
+        dispatch(action);
+    };
 
-        const onFinishFailed = (errorInfo) => {
-            console.log('Failed:', errorInfo);
-        };
-        return (
-            <div className="login">
-                <MyHeader navItem='hidden' user='hidden' hiring='hidden' />
-                <p className="...">
-                    Welcome to your professional community
-                </p>
+    const responseGoogle = (response) => {
+        console.log(response);
+        const action = actLoginGG(response.accessToken, history);
+        dispatch(action);
+    }
+    const renderNoti = React.useCallback(
+        () => {
+            return <> {err === null ? '' : openNotification('Login failed', err)} </>
+        }, [err])
 
-                <Form
-                    name="basic"
-                    wrapperCol={{ span: 8 }}
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    style={{ marginLeft: 150 }}
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+    return (
+        <div className={myStyles.login}>
+            <div className={myStyles.imageContainer}>
+                <div className={myStyles.logo}>
+                <div>
+                    <img alt="logo" src={tt} />
+                </div>
+                </div>
+            </div>
+            <p className={myStyles.headers}>
+                Welcome to your professional community
+            </p>
+
+            <Form
+                name="basic"
+                wrapperCol={{ span: 8 }}
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                style={{ marginLeft: 150 }}
+            >
+                <Form.Item
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your username!' }]}
                 >
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input style={{ height: `50px` }} size="large" placeholder="Username" />
-                    </Form.Item>
+                    <Input style={{ height: `50px` }} size="large" placeholder="Username" />
+                </Form.Item>
 
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
-                    >
-                        <Input.Password style={{ height: `50px` }} size="large" placeholder="Password" />
-                    </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
+                >
+                    <Input.Password style={{ height: `50px` }} size="large" placeholder="Password" />
+                </Form.Item>
 
-                    <Form.Item name="forgot" >
-                        <Button type="link" style={{ padding: 0 }}>Forgot password?</Button>
-                    </Form.Item>
+                <Form.Item name="forgot" >
+                    <Button type="link" style={{ padding: 0 }}>Forgot password?</Button>
+                </Form.Item>
 
-                    <Form.Item style={{ marginBottom: `10px`}}>
-                        <Button type='primary' size="large" shape="round" htmlType="submit" style={{ width: `100%`, height: `50px` }}>
-                            Sign in
-                        </Button>
-                    </Form.Item>
+                <Form.Item style={{ marginBottom: `10px` }}>
+                    <Button type='primary' size="large" shape="round" htmlType="submit" style={{ width: `100%`, height: `50px` }}>
+                        Sign in
+                    </Button>
+                </Form.Item>
 
-                    <Form.Item style={{ marginBottom: `10px`}}>
-                    <div className="sign-in-form__or-divider">
-                        <span className="sign-in-form__or-span">
-                            or
-                        </span>
-                    </div>
-                    </Form.Item>
+                <Form.Item style={{ marginBottom: `10px` }}>
+                    <Divider>or</Divider>
 
-                    <Form.Item >
-                        <Button size="large" shape="round" style={{ width: `100%`, height: `50px` }} data-theme="dark">
-                            <img className="iconGG" src={icGoogle} alt="GoogleIcon"/>Sign in with Google
-                        </Button>
-                    </Form.Item>
+                </Form.Item>
 
-                    <Form.Item style={{ marginBottom: `10px`}}>
+                <Form.Item >
+                    <GoogleLogin
+                        clientId="143666509308-7k0rlo8ijp6ar4uutfjp3biifcijo017.apps.googleusercontent.com"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                        render={renderProps => (
+                            <Button onClick={renderProps.onClick} disabled={renderProps.disabled} size="large" shape="round" style={{ width: `100%`, height: `50px` }} >
+                                <FcGoogle style={{ fontSize: '40px', paddingRight: '10px' }} /> Continue with Google
+                            </Button>
+                        )}
+                    />
+                </Form.Item>
+
+
+                <Form.Item style={{ marginBottom: `10px` }}>
                     <div style={{ textAlign: 'center' }}>
                         Not a member? <NavLink to="/register">Join now</NavLink>
                     </div>
-                    </Form.Item>
-
-                </Form>
-            </div>
-        )
-    }
+                </Form.Item>
+            </Form>
+            {renderNoti()}
+        </div>
+    )
 }

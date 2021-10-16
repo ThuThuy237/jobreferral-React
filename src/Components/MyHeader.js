@@ -1,38 +1,35 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Row, Col, } from 'antd';
 import { NavLink } from 'react-router-dom';
-import tt from '../Assets/Images/tt.png'
-import '../Styles/HeaderStyle.css'
+import tt from '../Assets/Images/tt.png';
+import myStyles from '../Styles/HeaderStyle.module.scss'
 
-export default function MyHeader(props) {
+export default function MyHeader() {
     return (
-        <div id="myHeader">
-            <div className="image-container">
-                <div className="logo">
-                <NavLink to="/">
-                    <img alt="logo" src={tt} />
-                </NavLink >
+        <Row id={myStyles.myHeader}>
+            <Col className={myStyles.imageContainer} span={4}>
+                <div className={myStyles.logo}>
+                    <NavLink to="/">
+                        <img alt="logo" src={tt} />
+                    </NavLink >
                 </div>
-            </div>
-            <div className="navbar-container">
-                <div className="nav-item-container" style={{visibility: props.navItem}}>
-                    <NavLink to="/">Home</NavLink >
-                    <NavLink to="/about">About Us</NavLink >
-                    <NavLink to="/">Contact</NavLink >
-                    <NavLink to="/">Find Jobs</NavLink >
-                    <NavLink to="/">Company Review</NavLink >
-                </div>
-                <div className="user-container" style={{visibility: props.user}}>
+            </Col>
+            <Col className={myStyles.navItemContainer} span={12}>
+                <NavLink to="/">Home</NavLink >
+                <NavLink to="/about">About Us</NavLink >
+                <NavLink to="/contact">Contact</NavLink >
+                <NavLink to="/find-job">Find Jobs</NavLink >
+                <NavLink to="/company-review">Company Review</NavLink >
+            </Col>
+            <Col className={myStyles.navItemContainer} span={6}>
+                <Button shape="round" size="large"  style={{borderColor: '#fac414'}}>
                     <NavLink to="/register">Join Now</NavLink >
-                    <Button shape="round" size="large" >
-                        <NavLink to="/login">Sign In</NavLink >
-                    </Button>
-                    
-                </div>
-                <div className="hiring-container"style={{visibility: props.hiring}}>
-                    <NavLink to="/login">Post A Job</NavLink >
-                </div>
-            </div>
-        </div>
+                </Button>
+                <Button shape="round" size="large" style={{backgroundColor: '#38b6ff', color: '#fff'}}>
+                    <NavLink style={{backgroundColor: '#38b6ff', color: '#fff'}} to="/login">Sign In</NavLink >
+                </Button>
+                <NavLink className={myStyles.stick} to="/login">Post A Job</NavLink >
+            </Col>
+        </Row>
     )
 }

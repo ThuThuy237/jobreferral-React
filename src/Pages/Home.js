@@ -1,13 +1,17 @@
-import React, { Component } from 'react'
-import MyHeader from '../Components/MyHeader'
+import React from 'react';
+// import { useDispatch} from 'react-redux';
+// import { actLogout } from '../reducers/Login/action';
 
-export default class Home extends Component {
-    render() {
-        return (
-            <div>
-                <MyHeader navItem='visible' user = 'visible' hiring='visible'/>
-                Home Page
-            </div>
-        )
-    }
+
+export default function Home() {
+    // const dispatch = useDispatch();
+    // const logout = () => {
+    //     const action = actLogout();
+    //     dispatch(action);
+    // }
+    return (
+        <div>
+            Home Page
+        </div>
+    )
 }
