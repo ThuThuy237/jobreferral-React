@@ -81,7 +81,7 @@ export default function Login() {
                     <Input.Password style={{ height: `50px` }} size="large" placeholder="Password" />
                 </Form.Item>
 
-                <Form.Item name="forgot" >
+                <Form.Item >
                     <Button type="link" style={{ padding: 0 }}>Forgot password?</Button>
                 </Form.Item>
 

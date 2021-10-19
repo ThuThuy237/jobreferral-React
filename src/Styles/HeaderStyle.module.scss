@@ -10,6 +10,10 @@ a:hover{
     justify-content: space-between;
     font-size: 18px;
 
+    .active{
+        color: #38b6ff;
+      }
+
     a{
         color: #000;
     }
@@ -30,6 +34,11 @@ a:hover{
         justify-content: space-around;
         align-items: center;
         padding-right: 15px;
+
+        div{
+            @extend .navItemContainer;
+            width: 100%;
+        }
     }
     .stick::before{
         content: "";

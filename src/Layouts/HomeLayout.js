@@ -1,5 +1,5 @@
 import React from 'react';
-// import HomeFooter from '../components/HomeFooter/HomeFooter';
+import Footer from '../Components/Footer';
 import MyHeader from '../Components/MyHeader';
 
 export default function LayoutHome({children}) {
@@ -7,7 +7,7 @@ export default function LayoutHome({children}) {
         <>
             <MyHeader/>
             {children}
-            {/* <HomeFooter/> */}
+            <Footer/>
         </>
     )
 }

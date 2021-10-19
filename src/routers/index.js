@@ -2,6 +2,7 @@ import Home from '../Pages/Home';
 import About from '../Pages/About';
 import Contact from '../Pages/Contact';
 import FindJob from '../Pages/FindJob';
+import PostDetail from '../Pages/PostDetail';
 import CompanyReview from '../Pages/CompanyReview';
 
 const routesHome = [
@@ -39,11 +40,11 @@ const routesHome = [
         exact: false,
         path: "/company-review",
         component: CompanyReview,
-    }
-    // {
-    //     exact: false,
-    //     path: "/course/:id",
-    //     component: DetailCourse,
-    // },
+    },
+    {
+        exact: false,
+        path: "/post/:id",
+        component: PostDetail,
+    },
 ];
 export { routesHome, }

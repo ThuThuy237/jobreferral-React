@@ -2,7 +2,7 @@ import { http } from "../../api/setting";
 import * as Type from './type';
 import cookies from 'react-cookies';
 import { Modal } from "antd";
-import {axios} from "axios";
+import axios from "axios";
 const grant_type = 'password';
 const client_id = 'rkIEIks89aJKch3vGO4JSwDWDwxgWK6l6MsQodwi';
 const client_secret = 'tZnJ8hN76t6CQFI3lB1oRCw3Zgoyf3gFMWw4qqHscI8LWhlZGZHdFn8U2qXDa9l9qlOgjLXDoUrIa8moDzyiBXlEeGMnjKyIrhH9yIpmj7DHvmK8id2KsjZKFDi7hjK8';
