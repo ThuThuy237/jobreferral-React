@@ -1,17 +1,23 @@
 import './App.css';
-import Home from './Pages/Home';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import 'antd/dist/antd.css';
-import About from './Pages/About';
-import {BrowserRouter , Route, Switch} from 'react-router-dom'
+import HomeTemplate from './Templates/HomeTemplate';
+import {BrowserRouter , Route, Switch} from 'react-router-dom';
+import { routesHome } from './routers';
 
 function App() {
+  const showLayoutHome = (routes) => {
+    if (routes && routes.length > 0) {
+      return routes.map((item, index) => {
+        return <HomeTemplate key={index} exact={item.exact} path={item.path} Component={item.component} />
+      });
+    }
+  }
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/about" exact component={About} />
+        {showLayoutHome(routesHome)}
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
       </Switch>
