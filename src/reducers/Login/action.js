@@ -11,6 +11,9 @@ export const getUserLogin = (history) => {
         dispatch(actionLoginRequest());
         http.get('user/current-user/').then((rs) => {
             dispatch(actionLoginSuccess(rs.data));
+            // if(rs.data.id === null){
+
+            // }
         }).catch((err) => {
             if (history) {
                 dispatch(actionLoginFailed("The login session has expired, please login again"));
@@ -31,9 +34,7 @@ export const actLogin = (user, history, mess) => {
             client_id: client_id,
             client_secret: client_secret
         }
-        console.log(data);
         await http.post('o/token/', data).then((rs) => {
-            // console.log(rs.data.access_token);
             cookies.save('access_token', rs.data.access_token, { path: '/' });
         }).catch((err) => {
             console.log(err)
@@ -43,6 +44,23 @@ export const actLogin = (user, history, mess) => {
             if (mess === "register success") {
                 return history.push('/')
             }
+            history.goBack();
+        }).catch((err) => {
+            dispatch(actionLoginFailed("Incorrect account and password"));
+        });
+    }
+}
+
+export const actRegister = (user, history, mess) => {
+    return async (dispatch) => {
+        dispatch(actionLoginRequest());
+        await http.post('user/', user).then((rs) => {
+            actLogin(rs, history, mess);
+        }).catch((err) => {
+            console.log(err)
+        })
+        await http.get('user/current-user/').then((rs) => {
+            dispatch(actionLoginSuccess(rs.data));
             history.goBack();
         }).catch((err) => {
             dispatch(actionLoginFailed("Incorrect account and password"));

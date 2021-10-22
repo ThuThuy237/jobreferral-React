@@ -1,16 +1,18 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import myStyles from '../Styles/Home.module.scss';
 import { Link } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { FcStatistics, FcPrevious, FcNext, FcBullish } from 'react-icons/fc';
-import { Form, Input, Select, Button, Card, Row, Col } from 'antd';
+import { Form, Input, Select, Button, Card, Row, Col, Tabs  } from 'antd';
 import Loading from '../Components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTopPost } from '../reducers/PostJob/action';
+import { getTopPost, getListPost } from '../reducers/PostJob/action';
+import { getListCategory, getListLocation } from '../reducers/GetResource/action';
 import JobCard from '../Components/JobCard';
 import Error from '../Components/Error';
 
 const { Option } = Select;
+const { TabPane } = Tabs;
 const gridStyle = {
     width: '25%',
     textAlign: 'center',
@@ -22,21 +24,26 @@ const gridStyle = {
 
 export default function Home() {
     const dispatch = useDispatch();
-    const { err, loading, listPost } = useSelector(state => state.PostJobReducer);
+    const { err, loading, listPost, topPost } = useSelector(state => state.PostJobReducer);
+    const { listCategory, listLocation } = useSelector(state => state.GetResourceReducer);
+    const [activeKey, setActiveKey] = useState('1')
 
     useEffect(() => {
         const action = getTopPost();
         dispatch(action);
+        dispatch(getListCategory());
+        dispatch(getListLocation());
     }, [dispatch])
 
-    const renderTopPost = useCallback(
+    const renderListPost = useCallback(
         () => {
             if (loading) { return <Loading /> }
             if (err) { return <Error /> }
-            if (listPost) {
+            if (listPost && listPost.results) {
                 return <>
-                    {listPost?.map(post => {
+                    {listPost.results?.map(post => {
                         return <JobCard
+                            key={post.id}
                             id={post.id}
                             title={post.title}
                             location={post.location}
@@ -50,6 +57,41 @@ export default function Home() {
         },
         [listPost, loading, err,]
     );
+    const renderTopPost = useCallback(
+        () => {
+            if (loading) { return <Loading /> }
+            if (err) { return <Error /> }
+            if (topPost && !topPost.results) {
+                return <>
+                    {topPost?.map(post => {
+                        return <JobCard
+                            key={post.id}
+                            id={post.id}
+                            title={post.title}
+                            location={post.location}
+                            subtitle={post.subtitle}
+                            image={post.image}
+                            created_date={post.created_date}
+                        />
+                    })}
+                </>
+            }
+        },
+        [topPost, loading, err,]
+    );
+
+    const onFinish = (values) => {
+        let data = {
+            ...values,
+        }
+        setActiveKey('2')
+        const action = getListPost(data);
+        // const action = getListPost(cate, loca, kwarg);
+        dispatch(action);
+    };
+    const onChange = (key)=> {
+        setActiveKey(key);
+    }
     return (
         <>
             <div className={myStyles.banner}>
@@ -64,15 +106,16 @@ export default function Home() {
                     <Form
                         name="search"
                         layout="inline"
+                        onFinish={onFinish}
                         style={{ justifyContent: 'center' }}
                     >
                         <Form.Item
                             name="category"
                         >
                             <Select placeholder="Select category" size="large" style={{ width: `250px` }}>
-                                <Option value="All category">All category</Option>
-                                <Option value="Part-time">Part-time</Option>
-                                <Option value="Full-time">Full-time</Option>
+                                {listCategory?.results?.map(category =>{
+                                    return <><Option key={category.id} value={category.id}>{category.name}</Option></>
+                                })}
                             </Select>
                         </Form.Item>
 
@@ -80,9 +123,9 @@ export default function Home() {
                             name="location"
                         >
                             <Select placeholder="Select location" size="large" style={{ width: `250px` }}>
-                                <Option value="Ho Chi Minh City">Ho Chi Minh City</Option>
-                                <Option value="Ha Noi">Ha Noi</Option>
-                                <Option value="Da Dang">Da Dang</Option>
+                            {listLocation?.results?.map(location =>{
+                                    return <><Option key={location.id} value={location.id}>{location.city}, {location.country}</Option></>
+                                })}
                             </Select>
                         </Form.Item>
 
@@ -97,15 +140,21 @@ export default function Home() {
                         </Form.Item>
                     </Form>
                 </div>
+                <div className={myStyles.itemContainer}>
+                <h1 className={myStyles.headers}>{activeKey === '1'? 'Browse recent jobs': 'Search result'}</h1>
+                <Tabs activeKey={activeKey} centered onChange={onChange}>
+                    <TabPane tab="Recent Job" key="1">
+                    {renderTopPost()}
+                    </TabPane>
+                    <TabPane tab="Rearch result" key="2">
+                    {renderListPost()}
+                    </TabPane>
+                </Tabs>
+                
+                <Link to='/find-job' className={myStyles.btnNext} >Show More....</Link>
             </div>
-            <div className={myStyles.itemContainer}>
-                <h1 className={myStyles.headers}>Top Concern</h1>
-                <Card bordered="false" className={myStyles.cardContainer}>
-                    <Card.Grid style={gridStyle}><span style={{ fontSize: '40px' }}><FcStatistics /></span>Markettings</Card.Grid>
-                    <Card.Grid style={gridStyle}><span style={{ fontSize: '40px' }}><FcPrevious /><FcNext /></span>Infomation Teachnology</Card.Grid>
-                    <Card.Grid style={gridStyle}><span style={{ fontSize: '40px' }}><FcBullish /></span>Data Analytics</Card.Grid>
-                </Card>
             </div>
+            
             <div className={myStyles.darkItemContainer}>
                 <h1 className={myStyles.headers}>Get job information daily</h1>
                 <p className={myStyles.headers}>Subscribe to our newsletter and get a coupon code!</p>
@@ -115,9 +164,12 @@ export default function Home() {
                 </Row>
             </div>
             <div className={myStyles.itemContainer}>
-                <h1 className={myStyles.headers}>Browse recent jobs</h1>
-                {renderTopPost()}
-                <Link to='/find-job' className={myStyles.btnNext} >Show More....</Link>
+                <h1 className={myStyles.headers}>Top Concern</h1>
+                <Card bordered="false" className={myStyles.cardContainer}>
+                    <Card.Grid style={gridStyle}><span style={{ fontSize: '40px' }}><FcStatistics /></span>Markettings</Card.Grid>
+                    <Card.Grid style={gridStyle}><span style={{ fontSize: '40px' }}><FcPrevious /><FcNext /></span>Infomation Teachnology</Card.Grid>
+                    <Card.Grid style={gridStyle}><span style={{ fontSize: '40px' }}><FcBullish /></span>Data Analytics</Card.Grid>
+                </Card>
             </div>
         </>
     )

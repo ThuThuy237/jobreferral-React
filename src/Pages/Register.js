@@ -1,28 +1,47 @@
 import React from 'react'
 import myStyles from '../Styles/RegisterStyle.module.scss';
 import { FcGoogle } from 'react-icons/fc';
-import { Form, Input, Button, Divider } from 'antd';
-import { actLoginGG } from '../reducers/Login/action';
+import { Form, Input, Button, Divider, notification } from 'antd';
+import { actLoginGG, actRegister } from '../reducers/Login/action';
 import { NavLink } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
 
 export default function Register() {
     const dispatch = useDispatch();
     let history = useHistory();
+    const { err } = useSelector(state => state.LoginReducer);
+
+    const openNotification = (mess, description) => {
+        notification.open({
+            message: mess,
+            description:
+                description,
+            placement: 'bottomRight',
+            type: 'error',
+            style: {
+                width: 400,
+            },
+        });
+    };
     const onFinish = (values) => {
-        console.log('Success:', values);
+        const action = actRegister(values, history);
+        dispatch(action);
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
     const responseGoogle = (response) => {
-        console.log(response);
         const action = actLoginGG(response.accessToken, history);
         dispatch(action);
     }
+
+     const renderNoti = React.useCallback(
+        () => {
+            return <> {err === null ? '' : openNotification('Register failed', err)} </>
+        }, [err])
     return (
         <div className={myStyles.register}>
             <div className={myStyles.registerContainer}>
@@ -41,6 +60,13 @@ export default function Register() {
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
                         <Input style={{ height: `50px` }} size="large" placeholder="Username" />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="email"
+                        rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}
+                    >
+                        <Input style={{ height: `50px` }} size="large" placeholder="Email" />
                     </Form.Item>
 
                     <Form.Item
@@ -103,6 +129,7 @@ export default function Register() {
                     </Form.Item>
 
                 </Form>
+            {renderNoti()}
             </div>
         </div>
     )

@@ -21,11 +21,12 @@ export default function PostDetail() {
             if (err) { return <Error /> }
             if (postDetail) {
                 return <>
-                    Post {postDetail.id}
-                    Title: {postDetail.title}
+                    {<div dangerouslySetInnerHTML={{ __html: Object.keys(postDetail).map(key => key+": "+postDetail[key]).join('<br/>') }} />}
+                    {/* Post {postDetail.id} <br/>
+                    Title: {postDetail.title} <br/>
                     <div dangerouslySetInnerHTML={{ __html: postDetail.description }} />
-                    Location: {postDetail.location}
-                    Created: {postDetail.created_date}
+                    Location: {postDetail.location} <br/>
+                    Created: {postDetail.created_date} <br/> */}
                 </>
             }
         },[postDetail, loading, err,])

@@ -18,8 +18,8 @@ const routesHome = [
     },
     // {
     //     exact: false,
-    //     path: "/courses",
-    //     component: CoursesPage,
+    //     path: "/r-register",
+    //     component: RegisterRecruiter,
     // },
     {
         exact: false,

@@ -2,10 +2,10 @@ import { http } from "../../api/setting";
 import * as Type from './type';
 // import axios from "axios";
 
-export const getListPost = () => {
+export const getListPost = (data ) => {
     return (dispatch) => {
         dispatch(actionGetPostRequest());
-        http.get('post/').then((rs) => {
+        http.get(`post/?category=${data.category? data.category:''}&location=${data.location? data.location:''}&kw=${data.kw? data.kw:''}&salary=${data.salary? data.salary:0}`).then((rs) => {
             dispatch(actionGetPostSuccess(rs.data));
         }).catch((err) => {
             dispatch(actionGetPostFailed(err));  
@@ -15,11 +15,11 @@ export const getListPost = () => {
 
 export const getTopPost = () => {
     return (dispatch) => {
-        dispatch(actionGetPostRequest());
+        dispatch(actionGetTopPostRequest());
         http.get('post/get-top5-lastest/').then((rs) => {
-            dispatch(actionGetPostSuccess(rs.data));
+            dispatch(actionGetTopPostSuccess(rs.data));
         }).catch((err) => {
-            dispatch(actionGetPostFailed(err));  
+            dispatch(actionGetTopPostFailed(err));  
         });
     }
 }
@@ -48,6 +48,23 @@ const actionGetPostSuccess = (data) => {
 const actionGetPostFailed = (err) => {
     return {
         type: Type.GETPOST_FAILED,
+        data: err
+    }
+}
+const actionGetTopPostRequest = () => {
+    return {
+        type: Type.GETTOPPOST_REQUEST
+    }
+}
+const actionGetTopPostSuccess = (data) => {
+    return {
+        type: Type.GETTOPPOST_SUCCESS,
+        data: data
+    }
+}
+const actionGetTopPostFailed = (err) => {
+    return {
+        type: Type.GETTOPPOST_FAILED,
         data: err
     }
 }

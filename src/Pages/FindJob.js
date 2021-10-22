@@ -1,10 +1,11 @@
-import { Row, Col } from 'antd';
+import { Row, Col} from 'antd';
 import React, { useEffect, useCallback } from 'react';
 import JobCard from '../Components/JobCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListPost } from '../reducers/PostJob/action';
 import Loading from '../Components/Loading';
 import Error from '../Components/Error';
+import Filter from '../Components/Filter';
 
 
 export default function FindJob() {
@@ -14,9 +15,10 @@ export default function FindJob() {
     const {err, loading, listPost } = useSelector(state => state.PostJobReducer);
 
     useEffect(() => {
-        const action = getListPost();
+        const action = getListPost('','','');
         dispatch(action);
     }, [dispatch])
+
 
     const renderListPost = useCallback(
         () => {
@@ -28,6 +30,7 @@ export default function FindJob() {
                         <Col span={16}>
                             {listPost.results?.map(post => {
                                 return <JobCard
+                                    key={post.id}
                                     id={post.id}
                                     title={post.title}
                                     location={post.location}
@@ -37,7 +40,7 @@ export default function FindJob() {
                                 />
                             })}
                         </Col>
-                        <Col span={8}>filter</Col>
+                        <Col span={6} offset={1}><Filter/></Col>
                     </Row>
                 </>
             }

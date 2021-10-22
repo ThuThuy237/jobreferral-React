@@ -38,28 +38,3 @@ export default function Error() {
         </div>
     )
 }
-// import React, { useState } from 'react';
-
-
-// export default function Error() { 
-
-//   const [MousePosition, setMousePosition] = useState({
-//       left: 0,
-//       top: 0
-//   })
-//   const [rot,setRot] = useState(null)
-
-//   function handleMouseMove(ev) { 
-//       setMousePosition({left: ev.pageX, top: ev.pageY});
-//       let rad = Math.atan2(left - x, top - y);
-//       let rot = (rad * (180 / Math.PI) * -1) + 180;
-//     }
-
-//   return (
-//     <div
-//       onMouseMove={(ev)=> handleMouseMove(ev)}
-//       style={{left:MousePosition.left , top: MousePosition.top, width: '100vw', height: '100vh'}}
-//     > </div>
-//   )
-
-// }

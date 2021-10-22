@@ -1,5 +1,8 @@
 export const GETPOST_REQUEST = 'GetPostReducer/GETPOST_REQUEST';
+export const GETTOPPOST_REQUEST = 'GetPostReducer/GETTOPPOST_REQUEST';
 export const GETPOST_SUCCESS = 'GetPostReducer/GETPOST_SUCCESS';
+export const GETTOPPOST_SUCCESS = 'GetPostReducer/GETTOPPOST_SUCCESS';
+export const GETTOPPOST_FAILED = 'GetPostReducer/GETTOPPOST_FAILED';
 export const GETPOST_FAILED = 'GetPostReducer/GETPOST_FAILED';
 export const GETDETAIL_REQUEST = 'GetDetailReducer/GETDETAIL_REQUEST';
 export const GETDETAIL_SUCCESS = 'GetDetailReducer/GETDETAIL_SUCCESS';
