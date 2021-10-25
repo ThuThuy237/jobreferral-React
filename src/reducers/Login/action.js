@@ -1,31 +1,28 @@
-import { http } from "../../api/setting";
+import { http } from "../../api/http";
+import { http_auth } from "../../api/http_auth";
 import * as Type from './type';
 import cookies from 'react-cookies';
 import { Modal } from "antd";
-import axios from "axios";
 const grant_type = 'password';
 const client_id = 'rkIEIks89aJKch3vGO4JSwDWDwxgWK6l6MsQodwi';
 const client_secret = 'tZnJ8hN76t6CQFI3lB1oRCw3Zgoyf3gFMWw4qqHscI8LWhlZGZHdFn8U2qXDa9l9qlOgjLXDoUrIa8moDzyiBXlEeGMnjKyIrhH9yIpmj7DHvmK8id2KsjZKFDi7hjK8';
 export const getUserLogin = (history) => {
     return (dispatch) => {
         dispatch(actionLoginRequest());
-        http.get('user/current-user/').then((rs) => {
+        http_auth.get('user/current-user/').then((rs) => {
             dispatch(actionLoginSuccess(rs.data));
-            // if(rs.data.id === null){
-
-            // }
         }).catch((err) => {
-            if (history) {
-                dispatch(actionLoginFailed("The login session has expired, please login again"));
-                history.push('/login')
-            }
-            else {
+            // if (history) {
+            //     dispatch(actionLoginFailed({'login sesion':"The login session has expired, please login again"}));
+            //     // history.push('/login')
+            // }
+            // else {
                 dispatch(actionLoginFailed(null));
-            }
+            // }
         });
     }
 }
-export const actLogin = (user, history, mess) => {
+export const actLogin = (user, history) => {
     return async (dispatch) => {
         dispatch(actionLoginRequest());
         let data = {
@@ -36,35 +33,26 @@ export const actLogin = (user, history, mess) => {
         }
         await http.post('o/token/', data).then((rs) => {
             cookies.save('access_token', rs.data.access_token, { path: '/' });
-        }).catch((err) => {
-            console.log(err)
-        })
-        await http.get('user/current-user/').then((rs) => {
-            dispatch(actionLoginSuccess(rs.data));
-            if (mess === "register success") {
-                return history.push('/')
-            }
+            // getUserLogin(history);
             history.goBack();
         }).catch((err) => {
-            dispatch(actionLoginFailed("Incorrect account and password"));
-        });
+            dispatch(actionLoginFailed({'Account info': 'Incorrect username or password'}));
+        })
     }
 }
 
-export const actRegister = (user, history, mess) => {
+export const actRegister = (user, history) => {
     return async (dispatch) => {
         dispatch(actionLoginRequest());
         await http.post('user/', user).then((rs) => {
-            actLogin(rs, history, mess);
+            let data = {
+                username: user.username,
+                password: user.password
+            }
+            dispatch( actLogin(data, history));
         }).catch((err) => {
-            console.log(err)
+            dispatch(actionLoginFailed(err.response.data));
         })
-        await http.get('user/current-user/').then((rs) => {
-            dispatch(actionLoginSuccess(rs.data));
-            history.goBack();
-        }).catch((err) => {
-            dispatch(actionLoginFailed("Incorrect account and password"));
-        });
     }
 }
 
@@ -72,7 +60,7 @@ export const actRegister = (user, history, mess) => {
 export const actLoginGG = (accessToken, history, mess) => {
     return async (dispatch) => {
         dispatch(actionLoginRequest());
-        await axios.post('http://127.0.0.1:8000/auth/convert-token/', {
+        await http.post('/auth/convert-token/', {
             token: accessToken,
             backend: 'google-oauth2',
             grant_type: 'convert_token',
@@ -80,22 +68,12 @@ export const actLoginGG = (accessToken, history, mess) => {
             client_secret: client_secret
 
         }).then((rs) => {
-            console.log(rs)
+            // console.log(rs)
             cookies.save('access_token', rs.data.access_token, { path: '/' });
+            history.goBack();
         }).catch((err) => {
             console.log(err)
         })
-        await http.get('user/current-user/').then((rs) => {
-            dispatch(actionLoginSuccess(rs.data));
-            // if (mess === "register success") {
-            //     return history.push('/')
-            // }
-            history.goBack();
-            // history.push('/');
-        }).catch((err) => {
-            console.log(err)
-            dispatch(actionLoginFailed("Failed!"));
-        });
     }
 }
 const actionLoginRequest = () => {
@@ -123,7 +101,7 @@ export const actLogout = () => {
 }
 export const resetPw = (data, colseModal) => {
     return (dispatch) => {
-        http.post(`user/reset-password/`,data).then((rs) => {
+        http_auth.post(`user/reset-password/`,data).then((rs) => {
             return Modal.success(
                 {
                     title: 'This is a notification message',

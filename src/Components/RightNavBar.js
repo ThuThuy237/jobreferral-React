@@ -4,15 +4,16 @@ import { actLogout, getUserLogin } from '../reducers/Login/action';
 import myStyles from '../Styles/HeaderStyle.module.scss';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 export default function RightNavBar() {
     const { userLogin, loading } = useSelector(state => state.LoginReducer);
     const dispatch = useDispatch();
+    let history = useHistory();
 
     useLayoutEffect(() => {
-        const action = getUserLogin();
-        dispatch(action);
-    }, [dispatch]);
+        dispatch(getUserLogin());
+    }, [dispatch, ]);
 
 
     const renderUser = React.useCallback(
@@ -21,8 +22,23 @@ export default function RightNavBar() {
             if (userLogin) {
                 const onClick = ({ key }) => {
                     switch (key) {
-                        case '5':
+                        case '6':
                             logout();
+                            break;
+                        case '1':
+                            history.push('/user')
+                            break;
+                        case '2':
+                            history.push('/user')
+                            break;
+                        case '3':
+                            history.push('/user')
+                            break;
+                        case '4':
+                            history.push('/user/info')
+                            break;
+                        case '5':
+                            history.push('/user/info')
                             break;
                         default:
                             break;
@@ -49,13 +65,14 @@ export default function RightNavBar() {
                             </Row>
                         </Menu.Item>
                         <Menu.Divider />
-                        <Menu.Item key="1" style={{ padding: '10px 40px' }}> Manage Post</Menu.Item>
+                        <Menu.Item key="1" style={{ padding: '10px 40px' }}> User Manage</Menu.Item>
+                        {userLogin.type === 'user'?'':<Menu.Item key="2" style={{ padding: '10px 40px' }}> Recruiter Manage</Menu.Item>}
                         <Menu.Divider />
-                        <Menu.Item key="2" style={{ padding: '10px 40px' }}> Account Settings</Menu.Item>
-                        <Menu.Item key="3" style={{ padding: '10px 40px' }}> Public Profile</Menu.Item>
-                        <Menu.Item key="4" style={{ padding: '10px 40px' }}> Edit Profile</Menu.Item>
+                        <Menu.Item key="3" style={{ padding: '10px 40px' }}> Account Settings</Menu.Item>
+                        <Menu.Item key="4" style={{ padding: '10px 40px' }}> Public Profile</Menu.Item>
+                        <Menu.Item key="5" style={{ padding: '10px 40px' }}> Edit Profile</Menu.Item>
                         <Menu.Divider />
-                        <Menu.Item key="5" style={{ padding: '10px 40px' }}>Log out</Menu.Item>
+                        <Menu.Item key="6" style={{ padding: '10px 40px' }}>Log out</Menu.Item>
                     </Menu>
                 );
                 return <>
@@ -66,7 +83,7 @@ export default function RightNavBar() {
                                 <Avatar >{userLogin.username.charAt(0).toUpperCase()}</Avatar>}
                         </Link>
                     </Dropdown>
-                    <Link className={myStyles.stick} to="/r-register">Post A Job</Link >
+                    {userLogin.type === 'user'?<Link className={myStyles.stick} to="/r-register">Post A Job</Link >:''}
                 </>
             } else {
                 return <>
@@ -80,7 +97,7 @@ export default function RightNavBar() {
                 </>
 
             }
-        }, [userLogin, dispatch, loading]);
+        }, [userLogin, dispatch, loading, history]);
     return (
         <div>
             {renderUser()}

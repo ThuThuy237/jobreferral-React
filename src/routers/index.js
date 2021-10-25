@@ -4,6 +4,8 @@ import Contact from '../Pages/Contact';
 import FindJob from '../Pages/FindJob';
 import PostDetail from '../Pages/PostDetail';
 import CompanyReview from '../Pages/CompanyReview';
+import User from '../Pages/User/User';
+import InfoUser from '../Pages/User/InfoUser';
 
 const routesHome = [
     {
@@ -16,11 +18,6 @@ const routesHome = [
         path: "/home",
         component: Home,
     },
-    // {
-    //     exact: false,
-    //     path: "/r-register",
-    //     component: RegisterRecruiter,
-    // },
     {
         exact: false,
         path: "/about",
@@ -47,4 +44,16 @@ const routesHome = [
         component: PostDetail,
     },
 ];
-export { routesHome, }
+const routesUser = [
+    {
+        exact: true,
+        path: "/user",
+        component: User,
+    },
+    {
+        exact: false,
+        path: "/user/info",
+        component: InfoUser,
+    },
+];
+export { routesHome, routesUser };

@@ -49,7 +49,7 @@ export default function Login() {
                 dispatch(action);
             }
             return <>
-                {err === null ? '' : openNotification('Login failed', err)}
+                {err === null ? '' : openNotification(Object.keys(err)[0], err[Object.keys(err)[0]])}
                 {userLogin === null ? <>
                     <div className={myStyles.login}>
                         <div className={myStyles.imageContainer}>

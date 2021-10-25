@@ -43,6 +43,14 @@ export default function Register() {
                 setSuccess(true);
                 dispatch(actionRegisterRecruiter(data));
             };
+            /* eslint-disable no-template-curly-in-string */
+            const validateMessages = {
+                required: '${label} is required!',
+                types: {
+                    email: '${label} is not a valid email!',
+                },
+            };
+            /* eslint-enable no-template-curly-in-string */
             return <>
                 {err === null ? '' : openNotification('Login failed', err)}
                 {userLogin === null ? history.push('/login') : ''}
@@ -65,12 +73,13 @@ export default function Register() {
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
+                            validateMessages={validateMessages}
                         >
                             <Form.Item
                                 label="Company Name "
                                 labelCol={{ span: '24' }}
                                 name="company_name"
-                                rules={[{ required: true, message: 'Please input company name!' }]}
+                                rules={[{ required: true, }]}
                             >
                                 <Input style={{ height: `50px` }} size="large" placeholder="e.g: TTDemy" />
                             </Form.Item>
@@ -79,7 +88,7 @@ export default function Register() {
                                 label="Company Email "
                                 labelCol={{ span: '24' }}
                                 name="contact_email"
-                                rules={[{ required: true, message: 'Please input company email!', type: 'email' }]}
+                                rules={[{ required: true, type: 'email' }]}
                             >
                                 <Input style={{ height: `50px` }} size="large" placeholder="e.g: vietnam@ttdemy.com" />
                             </Form.Item>
@@ -88,7 +97,7 @@ export default function Register() {
                                 name="contact_phone"
                                 label="Company Phone "
                                 labelCol={{ span: '24' }}
-                                rules={[{ required: true, message: 'Please input company phone!' }]}
+                                rules={[{ required: true, }]}
                             >
                                 <PhoneInput
                                     className={myStyles.phoneInput}
@@ -105,7 +114,7 @@ export default function Register() {
                                 label="Company Address"
                                 labelCol={{ span: '24' }}
                                 name="address"
-                                rules={[{ required: true, message: 'Please input company address!' }]}
+                                rules={[{ required: true, }]}
                             >
                                 <Input style={{ height: `50px` }} size="large" placeholder="e.g: Nguyen Van Mai Street, District 3, Ho Chi Minh City, Vietnam" />
                             </Form.Item>

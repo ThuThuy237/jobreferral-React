@@ -1,9 +1,9 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { NavLink } from 'react-router-dom';
-import tt from '../Assets/Images/tt.png';
 import myStyles from '../Styles/HeaderStyle.module.scss';
 import RightNavBar from './RightNavBar';
+import Logo from './Logo';
 
 export default function MyHeader() {
 
@@ -11,9 +11,7 @@ export default function MyHeader() {
         <Row id={myStyles.myHeader}>
             <Col className={myStyles.imageContainer} span={4}>
                 <div className={myStyles.logo}>
-                    <NavLink to="/">
-                        <img alt="logo" src={tt} />
-                    </NavLink >
+                    <Logo/>
                 </div>
             </Col>
             <Col className={myStyles.navItemContainer} span={12}>

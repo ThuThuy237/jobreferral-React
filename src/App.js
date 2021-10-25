@@ -4,8 +4,9 @@ import Register from './Pages/Register';
 import RegisterRecruiter from './Pages/RegisterRecruiter';
 import 'antd/dist/antd.css';
 import HomeTemplate from './Templates/HomeTemplate';
+import UserTemplate from './Templates/UserTemplate';
 import {BrowserRouter , Route, Switch} from 'react-router-dom';
-import { routesHome } from './routers';
+import { routesHome, routesUser } from './routers';
 
 function App() {
   const showLayoutHome = (routes) => {
@@ -15,10 +16,18 @@ function App() {
       });
     }
   }
+  const showLayoutUser = (routes) => {
+    if (routes && routes.length > 0) {
+      return routes.map((item, index) => {
+        return <UserTemplate key={index} exact={item.exact} path={item.path} Component={item.component} />
+      });
+    }
+  }
   return (
     <BrowserRouter>
       <Switch>
         {showLayoutHome(routesHome)}
+        {showLayoutUser(routesUser)}
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
         <Route path="/r-register" exact component={RegisterRecruiter} />

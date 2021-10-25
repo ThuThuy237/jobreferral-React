@@ -1,4 +1,4 @@
-import { http } from "../../api/setting";
+import { http } from "../../api/http";
 import * as Type from './type';
 // import axios from "axios";
 

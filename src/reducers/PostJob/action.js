@@ -1,6 +1,5 @@
-import { http } from "../../api/setting";
+import { http } from "../../api/http";
 import * as Type from './type';
-// import axios from "axios";
 
 export const getListPost = (data ) => {
     return (dispatch) => {
@@ -27,7 +26,7 @@ export const getTopPost = () => {
 export const gePostDetail = (id) => {
     return (dispatch) => {
         dispatch(actionGetDetailRequest());
-        http.get(`post/${id}`).then((rs) => {
+        http.get(`post/${id}/`).then((rs) => {
             dispatch(actionGetDetailSuccess(rs.data));
         }).catch((err) => {
             dispatch(actionGetDetailFailed(err));  

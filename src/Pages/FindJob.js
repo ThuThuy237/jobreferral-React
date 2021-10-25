@@ -1,5 +1,5 @@
 import { Row, Col} from 'antd';
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, } from 'react';
 import JobCard from '../Components/JobCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListPost } from '../reducers/PostJob/action';
