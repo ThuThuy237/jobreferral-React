@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import User from './Pages/User/User';
 import RegisterRecruiter from './Pages/RegisterRecruiter';
 import 'antd/dist/antd.css';
 import HomeTemplate from './Templates/HomeTemplate';
@@ -29,6 +30,7 @@ function App() {
         {showLayoutHome(routesHome)}
         {showLayoutUser(routesUser)}
         <Route path="/login" exact component={Login} />
+        {/* <Route path="/user/:id" exact component={User} /> */}
         <Route path="/register" exact component={Register} />
         <Route path="/r-register" exact component={RegisterRecruiter} />
       </Switch>
