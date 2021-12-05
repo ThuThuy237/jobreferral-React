@@ -15,6 +15,7 @@ export default function UserLayout({ children }) {
     };
     return (
         <>
+        {userLogin.type === "user" ?
             <Layout>
                 <Sider collapsible collapsed={collapsed} onCollapse={toggleCollapsed} style={{ backgroundColor: '#fff', height: '100vh',}}>
                     <div style={{width:'30%', margin:'auto'}}>
@@ -41,6 +42,7 @@ export default function UserLayout({ children }) {
                     <Footer style={{ textAlign: 'center' }}>T&T Design ©2021 Created by TT and BT</Footer>
                 </Layout>
             </Layout>
+            : "not a user"}
         </>
     )
 }

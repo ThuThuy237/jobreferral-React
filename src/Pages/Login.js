@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import myStyles from '../Styles/LoginStyle.module.scss';
-import { Form, Input, Button, notification, Divider } from 'antd';
+import { Form, Input, Button,  Divider } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { actLogin, actLoginGG, getUserLogin } from '../reducers/Login/action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ export default function Login() {
 
     const dispatch = useDispatch();
 
-    const { err, userLogin } = useSelector(state => state.LoginReducer);
+    const { userLogin } = useSelector(state => state.LoginReducer);
 
     useEffect(() => {
         dispatch(getUserLogin(history));
@@ -24,18 +24,6 @@ export default function Login() {
         () => {
             const onFinishFailed = (errorInfo) => {
                 console.log('Failed:', errorInfo);
-            };
-            const openNotification = (mess, description) => {
-                notification.open({
-                    message: mess,
-                    description:
-                        description,
-                    placement: 'bottomRight',
-                    type: 'error',
-                    style: {
-                        width: 400,
-                    },
-                });
             };
             const onFinish = (values) => {
                 let user = values;
@@ -49,7 +37,7 @@ export default function Login() {
                 dispatch(action);
             }
             return <>
-                {err === null ? '' : openNotification(Object.keys(err)[0], err[Object.keys(err)[0]])}
+                
                 {userLogin === null ? <>
                     <div className={myStyles.login}>
                         <div className={myStyles.imageContainer}>
@@ -124,7 +112,7 @@ export default function Login() {
                     </div>
                 </> : history.goBack()}
             </>
-        }, [err, userLogin, history, dispatch])
+        }, [userLogin, history, dispatch])
     return (
         <>{renderPage()}</>
     )

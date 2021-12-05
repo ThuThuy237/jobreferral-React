@@ -2,7 +2,7 @@ import { http } from "../../api/http";
 import { http_auth } from "../../api/http_auth";
 import * as Type from './type';
 import cookies from 'react-cookies';
-import { Modal } from "antd";
+import {Noti} from "../../Components/Noti";
 const grant_type = 'password';
 const client_id = 'rkIEIks89aJKch3vGO4JSwDWDwxgWK6l6MsQodwi';
 const client_secret = 'tZnJ8hN76t6CQFI3lB1oRCw3Zgoyf3gFMWw4qqHscI8LWhlZGZHdFn8U2qXDa9l9qlOgjLXDoUrIa8moDzyiBXlEeGMnjKyIrhH9yIpmj7DHvmK8id2KsjZKFDi7hjK8';
@@ -17,7 +17,8 @@ export const getUserLogin = (history) => {
             //     // history.push('/login')
             // }
             // else {
-                dispatch(actionLoginFailed(null));
+                dispatch(actionLoginFailed({"err":"error"}));
+                // Noti("Login failed", "The login session has expired, please login again", "error");
             // }
         });
     }
@@ -37,7 +38,45 @@ export const actLogin = (user, history) => {
             history.goBack();
         }).catch((err) => {
             dispatch(actionLoginFailed({'Account info': 'Incorrect username or password'}));
+            Noti('Account info', 'Incorrect username or password', "error");
         })
+    }
+}
+export const actChangeInfo = (user) => {
+    return async (dispatch) => {
+        dispatch(actionChangeInfoRequest());
+        await http_auth.patch(`user/change-info/`, user).then((rs) => {
+           dispatch(actionChangeInfoSuccess(rs));
+           Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
+        }).catch((err) => {
+            dispatch(actionChangeInfoFailed({'Account info': 'Incorrect username or password'}));
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            // console.log(err)
+        })
+        dispatch(actionLoginRequest());
+        await http_auth.get('user/current-user/').then((rs) => {
+            dispatch(actionLoginSuccess(rs.data));
+        }).catch((err) => {
+                dispatch(actionLoginFailed({"err":"error"}));
+        });
+    }
+}
+
+export const actChangeAvatar = (user) => {
+    return async (dispatch) => {
+        dispatch(actionChangeInfoRequest());
+        await http_auth.patch(`user/change-ava/`, user).then((rs) => {
+           dispatch(actionChangeInfoSuccess(rs));
+           Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
+        }).catch((err) => {
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+        })
+        dispatch(actionLoginRequest());
+        await http_auth.get('user/current-user/').then((rs) => {
+            dispatch(actionLoginSuccess(rs.data));
+        }).catch((err) => {
+                dispatch(actionLoginFailed({"err":"error"}));
+        });
     }
 }
 
@@ -93,39 +132,36 @@ const actionLoginFailed = (err) => {
         data: err
     }
 }
+const actionChangeInfoRequest = () => {
+    return {
+        type: Type.CHANGE_INFO_REQUEST
+    }
+}
+const actionChangeInfoSuccess = (data) => {
+    return {
+        type: Type.CHANGE_INFO_SUCCESS,
+        data: data
+    }
+}
+const actionChangeInfoFailed = (err) => {
+    return {
+        type: Type.CHANGE_INFO_FAILED,
+        data: err
+    }
+}
 export const actLogout = () => {
     cookies.remove('access_token');
     return {
         type: Type.LOGOUT,
     }
 }
-export const resetPw = (data, colseModal) => {
+export const resetPw = (data) => {
     return (dispatch) => {
+        dispatch(actionChangeInfoRequest());
         http_auth.post(`user/reset-password/`,data).then((rs) => {
-            return Modal.success(
-                {
-                    title: 'This is a notification message',
-                    content: rs.data.mess,
-                    width: 500,
-                    okText: "confirm",
-                    onOk() {
-                        return colseModal();
-                    }
-                }
-            )
+            dispatch(actionChangeInfoSuccess());
         }).catch((err) => {
-            if (err.response?.data?.mess) {
-                return Modal.error(
-                    {
-                        title: 'This is a notification message',
-                        content: err.response?.data?.mess,
-                        width: 500,
-                        okText: "confirm",
-                        onOk() { }
-                    }
-                )
-            }
-            console.log(err)
+            dispatch(actionChangeInfoFailed(err));
         })
     }
 }

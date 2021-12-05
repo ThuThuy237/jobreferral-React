@@ -114,7 +114,7 @@ export default function Home() {
                         >
                             <Select placeholder="Select category" size="large" style={{ width: `250px` }}>
                                 {listCategory?.results?.map(category =>{
-                                    return <><Option key={category.id} value={category.id}>{category.name}</Option></>
+                                    return <Option key={category.id} value={category.id}>{category.name}</Option>
                                 })}
                             </Select>
                         </Form.Item>
@@ -124,7 +124,7 @@ export default function Home() {
                         >
                             <Select placeholder="Select location" size="large" style={{ width: `250px` }}>
                             {listLocation?.results?.map(location =>{
-                                    return <><Option key={location.id} value={location.id}>{location.city}, {location.country}</Option></>
+                                    return <Option key={location.id} value={location.id}>{location.city}, {location.country}</Option>
                                 })}
                             </Select>
                         </Form.Item>

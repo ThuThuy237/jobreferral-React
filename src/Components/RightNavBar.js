@@ -21,28 +21,60 @@ export default function RightNavBar() {
             if (loading) { return <></> }
             if (userLogin) {
                 const onClick = ({ key }) => {
-                    switch (key) {
-                        case '6':
-                            logout();
-                            break;
-                        case '1':
-                            history.push('/user')
-                            break;
-                        case '2':
-                            history.push('/user')
-                            break;
-                        case '3':
-                            history.push('/user')
-                            break;
-                        case '4':
-                            history.push('/user/info')
-                            break;
-                        case '5':
-                            history.push('/user/info')
-                            break;
-                        default:
-                            break;
+                    if(userLogin.type === "user") {
+                        switch (key) {
+                            case '6':
+                                logout();
+                                break;
+                            case '0':
+                                history.push('/user')
+                                break;
+                            case '1':
+                                history.push('/user')
+                                break;
+                            case '2':
+                                history.push('/user')
+                                break;
+                            case '3':
+                                history.push('/user/job-applications')
+                                break;
+                            case '4':
+                                history.push('/user/info')
+                                break;
+                            case '5':
+                                history.push('/user/info')
+                                break;
+                            default:
+                                break;
+                        }
+                    }else if (userLogin.type ==="recruiter"){
+                        switch (key) {
+                            case '6':
+                                logout();
+                                break;
+                            case '0':
+                                history.push('/recruiter')
+                                break;
+                            case '1':
+                                history.push('/recruiter')
+                                break;
+                            case '2':
+                                history.push('/recruiter')
+                                break;
+                            case '3':
+                                history.push('/recruiter/company-info')
+                                break;
+                            case '4':
+                                history.push('/recruiter/info')
+                                break;
+                            case '5':
+                                history.push('/recruiter/info')
+                                break;
+                            default:
+                                break;
+                        }
                     }
+                    
                 }
 
                 const logout = () => {

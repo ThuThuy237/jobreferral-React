@@ -2,6 +2,7 @@ import * as Type from './type';
 let initialState = {
     loading: true,
     userLogin: null,
+    changeState: null,
     err: null,
 }
 const LoginReducer = (state = initialState, action) => {
@@ -21,6 +22,24 @@ const LoginReducer = (state = initialState, action) => {
         case Type.LOGIN_FAILED:{
             state.loading = false;
             state.userLogin = null;
+            state.err = action.data;
+            return {...state}
+        }
+        case Type.CHANGE_INFO_REQUEST: {
+            state.loading = true;
+            state.changeState = null;
+            state.err = null;
+            return {...state}
+        }
+        case Type.CHANGE_INFO_SUCCESS:{
+            state.loading = false;
+            state.changeState = action.data;
+            state.err = null;
+            return {...state}
+        }
+        case Type.CHANGE_INFO_FAILED:{
+            state.loading = false;
+            state.changeState = null;
             state.err = action.data;
             return {...state}
         }

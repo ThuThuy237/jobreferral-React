@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route } from 'react-router';
-import UserLayout from '../Layouts/UserLayout';
+import RecruiterLayout from '../Layouts/RecruiterLayout';
 import { getUserLogin } from '../reducers/Login/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
@@ -23,9 +23,9 @@ export default function UserTemplate({ Component, ...props }) {
       return <>
         <Route {...props}
           render={(propsComponent) => (
-            <UserLayout>
+            <RecruiterLayout>
               <Component {...propsComponent} />
-            </UserLayout>
+            </RecruiterLayout>
           )}
         />
       </>

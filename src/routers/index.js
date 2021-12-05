@@ -6,6 +6,11 @@ import PostDetail from '../Pages/PostDetail';
 import CompanyReview from '../Pages/CompanyReview';
 import User from '../Pages/User/User';
 import InfoUser from '../Pages/User/InfoUser';
+import ChangePassword from '../Pages/User/ChangePassword';
+import JobApplications from '../Pages/User/JobApplication';
+import Applied from '../Pages/User/Applied';
+import CompanyInfo from '../Pages/Recruiter/CompanyInfo';
+import PostedJobs from '../Pages/Recruiter/PostedJobs';
 
 const routesHome = [
     {
@@ -55,5 +60,47 @@ const routesUser = [
         path: "/user/info",
         component: InfoUser,
     },
+    {
+        exact: false,
+        path: "/user/change-password",
+        component: ChangePassword,
+    },
+    {
+        exact: false,
+        path: "/user/job-applications",
+        component: JobApplications,
+    },
+    {
+        exact: false,
+        path: "/user/applied",
+        component: Applied,
+    },
 ];
-export { routesHome, routesUser };
+const routesRecruiter = [
+    {
+        exact: true,
+        path: "/recruiter",
+        component: User,
+    },
+    {
+        exact: false,
+        path: "/recruiter/info",
+        component: InfoUser,
+    },
+    {
+        exact: false,
+        path: "/recruiter/change-password",
+        component: ChangePassword,
+    },
+    {
+        exact: false,
+        path: "/recruiter/company-info",
+        component: CompanyInfo,
+    },
+    {
+        exact: false,
+        path: "/recruiter/posted-jobs",
+        component: PostedJobs,
+    },
+];
+export { routesHome, routesUser, routesRecruiter };

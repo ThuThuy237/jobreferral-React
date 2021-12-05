@@ -9,27 +9,27 @@ import {
     ContainerOutlined,
 } from '@ant-design/icons';
 
-export default function UserRightMenu() {
+export default function RecruiterRightMenu() {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
     
     const menuClick = (e) => {
         switch (e.key){
-            case "/user":
-                history.push("/user");
+            case "/recruiter":
+                history.push("/recruiter");
                 break;
-            case "/user/info":
-                history.push("/user/info")
+            case "/recruiter/info":
+                history.push("/recruiter/info")
                 break;
-            case "/user/job-applications":
-                history.push("/user/job-applications");
+            case "/recruiter/company-info":
+                history.push("/recruiter/company-info");
                 break;
-            case "/user/applied":
-                history.push("/user/applied");
+            case "/recruiter/posted-jobs":
+                history.push("/recruiter/posted-jobs");
                 break;
-            case "/user/change-password":
-                history.push("/user/change-password");
+            case "/recruiter/change-password":
+                history.push("/recruiter/change-password");
                 break;
             case "7":
                 dispatch(actLogout());
@@ -48,20 +48,20 @@ export default function UserRightMenu() {
                 defaultOpenKeys={['sub1']}
 
             >
-                <Menu.Item key="/user" icon={<PieChartOutlined />}>
+                <Menu.Item key="/recruiter" icon={<PieChartOutlined />}>
                     Dashboard
                 </Menu.Item>
-                <Menu.Item key="/user/info" icon={<DesktopOutlined />}>
+                <Menu.Item key="/recruiter/info" icon={<DesktopOutlined />}>
                     Account Infomation
                 </Menu.Item>
-                <Menu.Item key="/user/change-password" icon={<ContainerOutlined />}>
+                <Menu.Item key="/recruiter/change-password" icon={<ContainerOutlined />}>
                     Change Password
                 </Menu.Item>
-                <Menu.Item key="/user/job-applications" icon={<PieChartOutlined />}>
-                    Job Applications
+                <Menu.Item key="/recruiter/company-info" icon={<PieChartOutlined />}>
+                    Company Infomation
                 </Menu.Item>
-                <Menu.Item key="/user/applied" icon={<DesktopOutlined />}>
-                    Applied Job
+                <Menu.Item key="/recruiter/posted-jobs" icon={<DesktopOutlined />}>
+                    Posted Jobs
                 </Menu.Item>
                 <Menu.Item key="7" icon={<ContainerOutlined />}>
                     Log Out
