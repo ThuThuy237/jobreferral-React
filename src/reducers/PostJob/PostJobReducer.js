@@ -4,6 +4,8 @@ let initialState = {
     listPost: null,
     topPost: null,
     postDetail: null,
+    postOwner: null,
+    currentPage: 1,
     err: null,
 }
 const PostJobReducer = (state = initialState, action) => {
@@ -60,6 +62,28 @@ const PostJobReducer = (state = initialState, action) => {
             state.loading = false;
             state.postDetail = null;
             state.err = action.data;
+            return {...state}
+        }
+        case Type.GETOWNER_REQUEST: {
+            state.loading = true;
+            state.postOwner = null;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETOWNER_SUCCESS:{
+            state.loading = false;
+            state.postOwner = action.data;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETOWNER_FAILED:{
+            state.loading = false;
+            state.postOwner = null;
+            state.err = action.data;
+            return {...state}
+        }
+        case Type.PAGE_INFO:{
+            state.currentPage = action.data;
             return {...state}
         }
         default:

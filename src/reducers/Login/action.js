@@ -80,6 +80,27 @@ export const actChangeAvatar = (user) => {
     }
 }
 
+export const actUploadCv = (data) => {
+    return async (dispatch) => {
+        await http_auth.patch(`job-appliant/upload-cv/`, data).then((rs) => {
+           Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
+           dispatch(getUserLogin())
+        }).catch((err) => {
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+        })
+    }
+}
+
+export const actUploadCoverLetter = (data) => {
+    return async (dispatch) => {
+        await http_auth.patch(`job-appliant/upload-cover-letter/`, data).then((rs) => {
+            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
+            dispatch(getUserLogin());
+         }).catch((err) => {
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+         })
+    }
+}
 export const actRegister = (user, history) => {
     return async (dispatch) => {
         dispatch(actionLoginRequest());
@@ -155,13 +176,13 @@ export const actLogout = () => {
         type: Type.LOGOUT,
     }
 }
-export const resetPw = (data) => {
+export const changePw = (data) => {
     return (dispatch) => {
-        dispatch(actionChangeInfoRequest());
-        http_auth.post(`user/reset-password/`,data).then((rs) => {
-            dispatch(actionChangeInfoSuccess());
+        http_auth.post(`user/change-password/`,data).then((rs) => {
+            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
+            // dispatch(getUserLogin());
         }).catch((err) => {
-            dispatch(actionChangeInfoFailed(err));
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
         })
     }
 }

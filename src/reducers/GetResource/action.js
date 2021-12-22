@@ -26,6 +26,17 @@ export const getListLocation = () => {
 }
 
 
+export const getListTag = () => {
+    return (dispatch) => {
+        dispatch(actionGetTagRequest());
+        http.get('tag/').then((rs) => {
+            dispatch(actionGetTagSuccess(rs.data));
+        }).catch((err) => {
+            dispatch(actionGetTagFailed(err));  
+        });
+    }
+}
+
 const actionGetCategoryRequest = () => {
     return {
         type: Type.GETCATEGORY_REQUEST
@@ -58,6 +69,25 @@ const actionGetLocationSuccess = (data) => {
 const actionGetLocationFailed = (err) => {
     return {
         type: Type.GETLOCATION_FAILED,
+        data: err
+    }
+}
+
+
+const actionGetTagRequest = () => {
+    return {
+        type: Type.GETTAG_REQUEST
+    }
+}
+const actionGetTagSuccess = (data) => {
+    return {
+        type: Type.GETTAG_SUCCESS,
+        data: data
+    }
+}
+const actionGetTagFailed = (err) => {
+    return {
+        type: Type.GETTAG_FAILED,
         data: err
     }
 }

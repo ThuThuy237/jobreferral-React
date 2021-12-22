@@ -16,8 +16,8 @@ export default function RecruiterRightMenu() {
     
     const menuClick = (e) => {
         switch (e.key){
-            case "/recruiter":
-                history.push("/recruiter");
+            case "/":
+                history.push("/");
                 break;
             case "/recruiter/info":
                 history.push("/recruiter/info")
@@ -48,8 +48,8 @@ export default function RecruiterRightMenu() {
                 defaultOpenKeys={['sub1']}
 
             >
-                <Menu.Item key="/recruiter" icon={<PieChartOutlined />}>
-                    Dashboard
+                <Menu.Item key="/" icon={<PieChartOutlined />}>
+                    Go Home
                 </Menu.Item>
                 <Menu.Item key="/recruiter/info" icon={<DesktopOutlined />}>
                     Account Infomation

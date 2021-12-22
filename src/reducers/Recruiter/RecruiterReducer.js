@@ -2,6 +2,7 @@ import * as Type from './type';
 let initialState = {
     loading: true,
     recruiter: null,
+    listRecruiter: null,
     err: null,
 }
 const RecruiterReducer = (state = initialState, action) => {
@@ -21,6 +22,24 @@ const RecruiterReducer = (state = initialState, action) => {
         case Type.GETRECRUITER_FAILED:{
             state.loading = false;
             state.recruiter = null;
+            state.err = action.data;
+            return {...state}
+        }
+        case Type.GETLISTRECRUITER_REQUEST: {
+            state.loading = true;
+            state.listRecruiter = null;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETLISTRECRUITER_SUCCESS:{
+            state.loading = false;
+            state.listRecruiter = action.data;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETLISTRECRUITER_FAILED:{
+            state.loading = false;
+            state.listRecruiter = null;
             state.err = action.data;
             return {...state}
         }

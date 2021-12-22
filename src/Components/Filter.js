@@ -41,7 +41,7 @@ export default function Filter() {
                     <Form.Item
                     >
                         <Row className={myStyles.headers}>
-                            <Col span={10} offset={4}>Advanced Search</Col>
+                            <Col span={10} offset={2}>Advanced Search</Col>
                             <Col span={8} offset={2}>
                                 <Button
                                     style={{ color: 'rgb(123 123 123)' }}
@@ -56,21 +56,21 @@ export default function Filter() {
                     </Form.Item>
                     <Divider />
                     <Row>
-                        <Col span={12} offset={4} style={{ marginTop: '10px', marginBottom: '10px' }}>Job name</Col>
-                        <Col span={16} offset={4}>
+                        <Col span={12} offset={2} className="my-2">Key word</Col>
+                        <Col span={20} offset={2}>
                         <Form.Item name="kw">
-                            <Input placeholder='Key word' size="large" style={{ width: `250px` }} />
+                            <Input placeholder='Key word' size="large"/>
                         </Form.Item>
                         </Col>
                     </Row>
 
                     <Row>
-                        <Col span={12} offset={4} style={{ marginTop: '10px', marginBottom: '10px' }}>Category</Col>
-                        <Col span={16} offset={4}>
+                        <Col span={12} offset={2} className="my-2">Category</Col>
+                        <Col span={20} offset={2}>
                             <Form.Item
                                 name="category"
                             >
-                                <Select placeholder="Select category" size="large" style={{ width: `-webkit-fill-available` }}>
+                                <Select placeholder="Select category" size="large">
                                 {listCategory?.results?.map(category =>{
                                     return <><Option key={category.id} value={category.id}>{category.name}</Option></>
                                 })}
@@ -80,12 +80,12 @@ export default function Filter() {
                     </Row>
 
                     <Row>
-                        <Col span={12} offset={4} style={{ marginTop: '10px', marginBottom: '10px' }}>Location</Col>
-                        <Col span={16} offset={4}>
+                        <Col span={12} offset={2} className="my-2">Location</Col>
+                        <Col span={20} offset={2}>
                             <Form.Item
                                 name="location"
                             >
-                                <Select placeholder="Select location" size="large" style={{ width: `-webkit-fill-available` }}>
+                                <Select placeholder="Select location" size="large" >
                                 {listLocation?.results?.map(location =>{
                                     return <><Option key={location.id} value={location.id}>{location.city}, {location.country}</Option></>
                                 })}
@@ -96,9 +96,9 @@ export default function Filter() {
                     </Row>
 
                     <Row>
-                        <Col span={12} offset={4} style={{ marginTop: '10px', marginBottom: '10px' }}>Salary</Col>
-                        <Col span={12} offset={4} style={{ marginTop: '10px', marginBottom: '10px', textAlign: 'center' }}>More than: ${salary}</Col>
-                        <Col span={16} offset={4}>
+                        <Col span={12} offset={2} className="my-2">Salary</Col>
+                        <Col span={12} offset={2} style={{ marginTop: '10px', marginBottom: '10px', textAlign: 'center' }}>More than: ${salary}</Col>
+                        <Col span={20} offset={2}>
                             <Form.Item
                                 name="salary"
                             >

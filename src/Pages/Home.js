@@ -50,6 +50,8 @@ export default function Home() {
                             subtitle={post.subtitle}
                             image={post.image}
                             created_date={post.created_date}
+                            salary={post.salary}
+                            category={post.category}
                         />
                     })}
                 </>
@@ -72,6 +74,8 @@ export default function Home() {
                             subtitle={post.subtitle}
                             image={post.image}
                             created_date={post.created_date}
+                            salary={post.salary}
+                            category={post.category}
                         />
                     })}
                 </>

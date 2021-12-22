@@ -5,12 +5,14 @@ import PostJobReducer from "../reducers/PostJob/PostJobReducer";
 import GetResourceReducer from "../reducers/GetResource/GetResourseReducer";
 import RegisterRecruiterReducer from "../reducers/RegisterRecruiter/RegisterRecruiterReducer";
 import RecruiterReducer from "../reducers/Recruiter/RecruiterReducer";
+import ApplyReducer from "../reducers/Apply/ApplyReducer";
 const rootReducer = combineReducers({
     LoginReducer,
     PostJobReducer,
     GetResourceReducer,
     RegisterRecruiterReducer,
     RecruiterReducer,
+    ApplyReducer,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

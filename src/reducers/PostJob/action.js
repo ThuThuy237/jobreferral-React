@@ -1,11 +1,16 @@
 import { http } from "../../api/http";
 import * as Type from './type';
+import { http_auth } from "../../api/http_auth";
+import {Noti} from "../../Components/Noti";
 
-export const getListPost = (data ) => {
+export const getListPost = (data, page) => {
     return (dispatch) => {
         dispatch(actionGetPostRequest());
-        http.get(`post/?category=${data.category? data.category:''}&location=${data.location? data.location:''}&kw=${data.kw? data.kw:''}&salary=${data.salary? data.salary:0}`).then((rs) => {
+        http.get(`post/?${page?page:"page=1"}&category=${data.category? data.category:''}&location=${data.location? data.location:''}&kw=${data.kw? data.kw:''}&salary=${data.salary? data.salary:0}`).then((rs) => {
             dispatch(actionGetPostSuccess(rs.data));
+            if(page) {
+                dispatch(actionSetPage(parseInt(page.replace('page=', ''))));
+            }
         }).catch((err) => {
             dispatch(actionGetPostFailed(err));  
         });
@@ -23,6 +28,17 @@ export const getTopPost = () => {
     }
 }
 
+
+export const getOwnerPost = () => {
+    return (dispatch) => {
+        dispatch(actionGetOwnerRequest());
+        http_auth.get('post/owner-get/').then((rs) => {
+            dispatch(actionGetOwnerSuccess(rs.data));
+        }).catch((err) => {
+            dispatch(actionGetOwnerFailed(err));  
+        });
+    }
+}
 export const gePostDetail = (id) => {
     return (dispatch) => {
         dispatch(actionGetDetailRequest());
@@ -31,6 +47,26 @@ export const gePostDetail = (id) => {
         }).catch((err) => {
             dispatch(actionGetDetailFailed(err));  
         });
+    }
+}
+export const deletePost = (id) => {
+    return (dispatch) => {
+        http_auth.get(`post/${id}/delete/`).then((rs) => {
+            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
+            dispatch(getOwnerPost());
+        }).catch((err) => {
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+        });
+    }
+}
+
+export const actActive = (data) => {
+    return async (dispatch) => {
+        await http_auth.post('post/change-active/', data).then((rs) => {
+            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
+        }).catch((err) => {
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+        })
     }
 }
 const actionGetPostRequest = () => {
@@ -82,5 +118,28 @@ const actionGetDetailFailed = (err) => {
     return {
         type: Type.GETDETAIL_FAILED,
         data: err
+    }
+}
+const actionGetOwnerRequest = () => {
+    return {
+        type: Type.GETOWNER_REQUEST
+    }
+}
+const actionGetOwnerSuccess = (data) => {
+    return {
+        type: Type.GETOWNER_SUCCESS,
+        data: data
+    }
+}
+const actionGetOwnerFailed = (err) => {
+    return {
+        type: Type.GETOWNER_FAILED,
+        data: err
+    }
+}
+const actionSetPage = (data) => {
+    return {
+        type: Type.PAGE_INFO,
+        data: data
     }
 }

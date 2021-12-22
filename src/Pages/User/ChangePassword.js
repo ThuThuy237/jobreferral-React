@@ -6,17 +6,22 @@ import {
     Form,
     Input,
 } from 'antd';
-// import { useSelector } from 'react-redux';
-import styles from '../../Styles/InfoUser.module.scss'
+import { useDispatch } from 'react-redux';
+import styles from '../../Styles/InfoUser.module.scss';
+import { changePw } from '../../reducers/Login/action';
 
 
 export default function InfoUser() {
     // const { userLogin } = useSelector(state => state.LoginReducer);
-
+    const dispatch = useDispatch();
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        console.log(values);
+        let data = {
+            password: values.password,
+        }
+        form.resetFields();
+        dispatch(changePw(data));
     }
     const onFinishFailed = (errorInfo) => {
         console.log(errorInfo);
@@ -39,15 +44,15 @@ export default function InfoUser() {
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                     >
-                        <Form.Item
+                        {/* <Form.Item
                             name="oldPassword"
                             label="Old Password"
                             rules={[{ required: true, message: 'Please input old password!' }]}
                         >
                             <Input.Password style={{ height: `50px`, borderRadius: "10px" }} size="large" placeholder="Old password..." />
-                        </Form.Item>
+                        </Form.Item> */}
                         <Form.Item
-                            name="newPassword"
+                            name="password"
                             label="New Password"
                             rules={[{ required: true, message: 'Please input new password!' }]}
                         >
@@ -65,7 +70,7 @@ export default function InfoUser() {
                                 },
                                 ({ getFieldValue }) => ({
                                     validator(_, value) {
-                                        if (!value || getFieldValue('newPassword') === value) {
+                                        if (!value || getFieldValue('password') === value) {
                                             return Promise.resolve();
                                         }
                                         return Promise.reject(new Error('The two passwords that you entered do not match!'));

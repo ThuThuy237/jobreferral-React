@@ -3,6 +3,7 @@ let initialState = {
     loading: true,
     listCategory: null,
     listLocation: null,
+    listTag: null,
     err: null,
 }
 const GetResourseReducer = (state = initialState, action) => {
@@ -40,6 +41,24 @@ const GetResourseReducer = (state = initialState, action) => {
         case Type.GETLOCATION_FAILED:{
             state.loading = false;
             state.listLocation = null;
+            state.err = action.data;
+            return {...state}
+        }
+        case Type.GETTAG_REQUEST: {
+            state.loading = true;
+            state.listTag = null;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETTAG_SUCCESS:{
+            state.loading = false;
+            state.listTag = action.data;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETTAG_FAILED:{
+            state.loading = false;
+            state.listTag = null;
             state.err = action.data;
             return {...state}
         }

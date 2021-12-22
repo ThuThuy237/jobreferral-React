@@ -93,14 +93,14 @@ export default function InfoUser() {
                             <Col span={8}><strong>Email</strong></Col>
                             <Col span={16} className={styles.grayLabel}>{userLogin.email ? userLogin.email : "..."}</Col>
                         </Row>
-                        <Row className={styles.rowInfo}>
+                        {/* <Row className={styles.rowInfo}>
                             <Col span={8}><strong>Phone</strong></Col>
                             <Col span={16} className={styles.grayLabel}>{userLogin.jobApplicant ? userLogin.jobApplicant.phone : "..."}</Col>
                         </Row>
                         <Row className={styles.rowInfo}>
                             <Col span={8}><strong>Address</strong></Col>
                             <Col span={16} className={styles.grayLabel}>{userLogin.jobApplicant ? userLogin.jobApplicant.address : "..."}</Col>
-                        </Row>
+                        </Row> */}
                         <Row style={{ margin: "10px" }}>
                             <Button type="primary" shape="round" size="large" onClick={showModal}>
                                 Edit
@@ -165,8 +165,8 @@ export default function InfoUser() {
                                     firstName: values.firstName ? values.firstName : null,
                                     lastName: values.lastName ? values.lastName : null,
                                     email: values.email ? values.email : null,
-                                    address: values.address ? values.address : null,
-                                    phone: values.phone ? values.phone : null,
+                                    // address: values.address ? values.address : null,
+                                    // phone: values.phone ? values.phone : null,
                                     id: userLogin.id,
                                 }
                                 console.log(values);
@@ -185,8 +185,8 @@ export default function InfoUser() {
                             firstName: userLogin.first_name ? userLogin.first_name : null,
                             lastName: userLogin.last_name ? userLogin.last_name : null,
                             email: userLogin.email ? userLogin.email : null,
-                            phone: userLogin.jobApplicant ? userLogin.jobApplicant.phone : null,
-                            address: userLogin.jobApplicant ? userLogin.jobApplicant.address : null,
+                            // phone: userLogin.jobApplicant ? userLogin.jobApplicant.phone : null,
+                            // address: userLogin.jobApplicant ? userLogin.jobApplicant.address : null,
                         }}
                         form={form}
                     >
@@ -213,7 +213,7 @@ export default function InfoUser() {
                         >
                             <Input style={{ height: `50px`, borderRadius: "10px" }} size="large" placeholder={userLogin.email ? userLogin.email : "Email"} />
                         </Form.Item>
-                        <Form.Item
+                        {/* <Form.Item
                             name="phone"
                             label="Phone"
                         >
@@ -223,8 +223,8 @@ export default function InfoUser() {
                             name="address"
                             label="Address"
                         >
-                            <Input style={{ height: `50px`, borderRadius: "10px" }} size="large" placeholder={userLogin.address ? userLogin.address : "Address"} />
-                        </Form.Item>
+                            <Input style={{ height: `50px`, borderRadius: "10px" }} size="large" placeholder={userLogin.jobApplicant? userLogin.jobApplicant.address : "Address"} />
+                        </Form.Item> */}
 
                     </Form>
                 </Modal></> : ""}

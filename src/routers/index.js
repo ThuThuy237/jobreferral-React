@@ -3,14 +3,16 @@ import About from '../Pages/About';
 import Contact from '../Pages/Contact';
 import FindJob from '../Pages/FindJob';
 import PostDetail from '../Pages/PostDetail';
+import CompanyDetails from '../Pages/CompanyDetail';
 import CompanyReview from '../Pages/CompanyReview';
-import User from '../Pages/User/User';
+// import User from '../Pages/User/User';
 import InfoUser from '../Pages/User/InfoUser';
 import ChangePassword from '../Pages/User/ChangePassword';
 import JobApplications from '../Pages/User/JobApplication';
 import Applied from '../Pages/User/Applied';
 import CompanyInfo from '../Pages/Recruiter/CompanyInfo';
 import PostedJobs from '../Pages/Recruiter/PostedJobs';
+import CreatePost from '../Pages/Recruiter/CreatePost';
 
 const routesHome = [
     {
@@ -48,12 +50,17 @@ const routesHome = [
         path: "/post/:id",
         component: PostDetail,
     },
+    {
+        exact: false,
+        path: "/company/:id",
+        component: CompanyDetails,
+    },
 ];
 const routesUser = [
     {
         exact: true,
         path: "/user",
-        component: User,
+        component: InfoUser,
     },
     {
         exact: false,
@@ -80,7 +87,7 @@ const routesRecruiter = [
     {
         exact: true,
         path: "/recruiter",
-        component: User,
+        component: InfoUser,
     },
     {
         exact: false,
@@ -101,6 +108,11 @@ const routesRecruiter = [
         exact: false,
         path: "/recruiter/posted-jobs",
         component: PostedJobs,
+    },
+    {
+        exact: false,
+        path: "/recruiter/create",
+        component: CreatePost,
     },
 ];
 export { routesHome, routesUser, routesRecruiter };

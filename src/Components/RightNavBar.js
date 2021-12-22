@@ -13,7 +13,7 @@ export default function RightNavBar() {
 
     useLayoutEffect(() => {
         dispatch(getUserLogin());
-    }, [dispatch, ]);
+    }, [dispatch,]);
 
 
     const renderUser = React.useCallback(
@@ -21,19 +21,19 @@ export default function RightNavBar() {
             if (loading) { return <></> }
             if (userLogin) {
                 const onClick = ({ key }) => {
-                    if(userLogin.type === "user") {
+                    if (userLogin.type === "user") {
                         switch (key) {
                             case '6':
                                 logout();
                                 break;
                             case '0':
-                                history.push('/user')
+                                history.push('/user/info')
                                 break;
                             case '1':
-                                history.push('/user')
+                                history.push('/user/info')
                                 break;
                             case '2':
-                                history.push('/user')
+                                history.push('/user/info')
                                 break;
                             case '3':
                                 history.push('/user/job-applications')
@@ -42,24 +42,21 @@ export default function RightNavBar() {
                                 history.push('/user/info')
                                 break;
                             case '5':
-                                history.push('/user/info')
+                                history.push('/user/applied')
                                 break;
                             default:
                                 break;
                         }
-                    }else if (userLogin.type ==="recruiter"){
+                    } else if (userLogin.type === "recruiter") {
                         switch (key) {
                             case '6':
                                 logout();
                                 break;
                             case '0':
-                                history.push('/recruiter')
+                                history.push('/recruiter/info')
                                 break;
                             case '1':
-                                history.push('/recruiter')
-                                break;
-                            case '2':
-                                history.push('/recruiter')
+                                history.push('/recruiter/info')
                                 break;
                             case '3':
                                 history.push('/recruiter/company-info')
@@ -68,13 +65,13 @@ export default function RightNavBar() {
                                 history.push('/recruiter/info')
                                 break;
                             case '5':
-                                history.push('/recruiter/info')
+                                history.push('/recruiter/posted-jobs')
                                 break;
                             default:
                                 break;
                         }
                     }
-                    
+
                 }
 
                 const logout = () => {
@@ -97,12 +94,17 @@ export default function RightNavBar() {
                             </Row>
                         </Menu.Item>
                         <Menu.Divider />
-                        <Menu.Item key="1" style={{ padding: '10px 40px' }}> User Manage</Menu.Item>
-                        {userLogin.type === 'user'?'':<Menu.Item key="2" style={{ padding: '10px 40px' }}> Recruiter Manage</Menu.Item>}
+                        <Menu.Item key="1" style={{ padding: '10px 40px' }}>
+                            {userLogin.type === 'user' ? 'User Manage' : 'Recruiter Manage'}
+                        </Menu.Item>
                         <Menu.Divider />
-                        <Menu.Item key="3" style={{ padding: '10px 40px' }}> Account Settings</Menu.Item>
+                        <Menu.Item key="3" style={{ padding: '10px 40px' }}>
+                            {userLogin.type === 'user' ? 'Job Application' : 'Company Information'}
+                        </Menu.Item>
                         <Menu.Item key="4" style={{ padding: '10px 40px' }}> Public Profile</Menu.Item>
-                        <Menu.Item key="5" style={{ padding: '10px 40px' }}> Edit Profile</Menu.Item>
+                        <Menu.Item key="5" style={{ padding: '10px 40px' }}>
+                            {userLogin.type === 'user' ? 'Applied Job' : 'Posted Job'}
+                        </Menu.Item>
                         <Menu.Divider />
                         <Menu.Item key="6" style={{ padding: '10px 40px' }}>Log out</Menu.Item>
                     </Menu>
@@ -115,7 +117,7 @@ export default function RightNavBar() {
                                 <Avatar >{userLogin.username.charAt(0).toUpperCase()}</Avatar>}
                         </Link>
                     </Dropdown>
-                    {userLogin.type === 'user'?<Link className={myStyles.stick} to="/r-register">Post A Job</Link >:''}
+                    {userLogin.type === 'user' ? <Link className={myStyles.stick} to="/r-register">Post A Job</Link > : ''}
                 </>
             } else {
                 return <>

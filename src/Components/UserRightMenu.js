@@ -16,8 +16,8 @@ export default function UserRightMenu() {
     
     const menuClick = (e) => {
         switch (e.key){
-            case "/user":
-                history.push("/user");
+            case "/":
+                history.push("/");
                 break;
             case "/user/info":
                 history.push("/user/info")
@@ -45,11 +45,9 @@ export default function UserRightMenu() {
             <Menu
                 onClick={menuClick}
                 defaultSelectedKeys={[`${location.pathname}`]}
-                defaultOpenKeys={['sub1']}
-
             >
-                <Menu.Item key="/user" icon={<PieChartOutlined />}>
-                    Dashboard
+                <Menu.Item key="/" icon={<PieChartOutlined />}>
+                    Go Home
                 </Menu.Item>
                 <Menu.Item key="/user/info" icon={<DesktopOutlined />}>
                     Account Infomation
