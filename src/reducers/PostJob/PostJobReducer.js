@@ -5,6 +5,7 @@ let initialState = {
     topPost: null,
     postDetail: null,
     postOwner: null,
+    listApplicants: null,
     currentPage: 1,
     err: null,
 }
@@ -79,6 +80,25 @@ const PostJobReducer = (state = initialState, action) => {
         case Type.GETOWNER_FAILED:{
             state.loading = false;
             state.postOwner = null;
+            state.err = action.data;
+            return {...state}
+        }
+        
+        case Type.GETAPPLICANTS_REQUEST: {
+            state.loading = true;
+            state.listApplicants = null;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETAPPLICANTS_SUCCESS:{
+            state.loading = false;
+            state.listApplicants = action.data;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETAPPLICANTS_FAILED:{
+            state.loading = false;
+            state.listApplicants = null;
             state.err = action.data;
             return {...state}
         }

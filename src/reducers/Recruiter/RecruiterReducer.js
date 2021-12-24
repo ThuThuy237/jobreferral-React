@@ -3,6 +3,7 @@ let initialState = {
     loading: true,
     recruiter: null,
     listRecruiter: null,
+    listReview: null,
     err: null,
 }
 const RecruiterReducer = (state = initialState, action) => {
@@ -40,6 +41,23 @@ const RecruiterReducer = (state = initialState, action) => {
         case Type.GETLISTRECRUITER_FAILED:{
             state.loading = false;
             state.listRecruiter = null;
+            state.err = action.data;
+            return {...state}
+        }case Type.GETLISTREVIEW_REQUEST: {
+            state.loading = true;
+            state.listReview = null;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETLISTREVIEW_SUCCESS:{
+            state.loading = false;
+            state.listReview = action.data;
+            state.err = null;
+            return {...state}
+        }
+        case Type.GETLISTREVIEW_FAILED:{
+            state.loading = false;
+            state.listReview = null;
             state.err = action.data;
             return {...state}
         }

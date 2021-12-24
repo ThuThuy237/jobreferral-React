@@ -49,6 +49,17 @@ export const gePostDetail = (id) => {
         });
     }
 }
+
+export const geListApplications = (id) => {
+    return (dispatch) => {
+        dispatch(actionGetApplicantsRequest());
+        http_auth.post(`apply/list-of-post/`, id).then((rs) => {
+            dispatch(actionGetApplicantsSuccess(rs.data));
+        }).catch((err) => {
+            dispatch(actionGetApplicantsFailed(err));  
+        });
+    }
+}
 export const deletePost = (id) => {
     return (dispatch) => {
         http_auth.get(`post/${id}/delete/`).then((rs) => {
@@ -141,5 +152,22 @@ const actionSetPage = (data) => {
     return {
         type: Type.PAGE_INFO,
         data: data
+    }
+}
+const actionGetApplicantsRequest = () => {
+    return {
+        type: Type.GETAPPLICANTS_REQUEST
+    }
+}
+const actionGetApplicantsSuccess = (data) => {
+    return {
+        type: Type.GETAPPLICANTS_SUCCESS,
+        data: data
+    }
+}
+const actionGetApplicantsFailed = (err) => {
+    return {
+        type: Type.GETAPPLICANTS_FAILED,
+        data: err
     }
 }

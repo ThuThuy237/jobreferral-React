@@ -172,6 +172,7 @@ const actionChangeInfoFailed = (err) => {
 }
 export const actLogout = () => {
     cookies.remove('access_token');
+    cookies.remove('access_token', { path: '/' })
     return {
         type: Type.LOGOUT,
     }

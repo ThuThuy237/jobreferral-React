@@ -13,6 +13,7 @@ import Applied from '../Pages/User/Applied';
 import CompanyInfo from '../Pages/Recruiter/CompanyInfo';
 import PostedJobs from '../Pages/Recruiter/PostedJobs';
 import CreatePost from '../Pages/Recruiter/CreatePost';
+import ManagePost from '../Pages/Recruiter/ManagePost';
 
 const routesHome = [
     {
@@ -113,6 +114,12 @@ const routesRecruiter = [
         exact: false,
         path: "/recruiter/create",
         component: CreatePost,
+    },
+    
+    {
+        exact: false,
+        path: "/recruiter/managePost/:id",
+        component: ManagePost,
     },
 ];
 export { routesHome, routesUser, routesRecruiter };

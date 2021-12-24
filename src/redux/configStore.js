@@ -6,6 +6,7 @@ import GetResourceReducer from "../reducers/GetResource/GetResourseReducer";
 import RegisterRecruiterReducer from "../reducers/RegisterRecruiter/RegisterRecruiterReducer";
 import RecruiterReducer from "../reducers/Recruiter/RecruiterReducer";
 import ApplyReducer from "../reducers/Apply/ApplyReducer";
+import JobApplicantReducer from "../reducers/JobApplicant/JobApplicantReducer";
 const rootReducer = combineReducers({
     LoginReducer,
     PostJobReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     RegisterRecruiterReducer,
     RecruiterReducer,
     ApplyReducer,
+    JobApplicantReducer,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

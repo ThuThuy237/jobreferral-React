@@ -10,13 +10,13 @@ import styles from '../../Styles/InfoUser.module.scss'
 import { useState } from 'react';
 import { CheckCircleOutlined, CloseCircleOutlined, ClockCircleOutlined, StarOutlined } from "@ant-design/icons";
 import { actRating } from '../../reducers/Apply/action';
+import { actGetListApply } from '../../reducers/JobApplicant/action';
 
 
 export default function Applied() {
     const dispatch = useDispatch();
-    const { userLogin } = useSelector(state => state.LoginReducer);
+    const { listApply } = useSelector(state => state.JobApplicantReducer);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [data, setData] = useState([]);
     const [form] = Form.useForm();
     const showModal = () => {
         setIsModalVisible(true);
@@ -27,12 +27,12 @@ export default function Applied() {
     };
     
     useEffect(() => {
-        setData(userLogin.jobApplicant.listApply);
-    }, [userLogin])
+        dispatch(actGetListApply());
+    }, [dispatch])
 
     const renderView = useCallback(
         () => {
-            if (userLogin) {
+            if (listApply) {
                 const columns = [
                     {
                         title: 'Post Title',
@@ -124,13 +124,13 @@ export default function Applied() {
 
                     <Row justify="center" style={{ marginTop: '50px' }}>
                         <Col span={20}>
-                            <Table columns={columns} dataSource={data} />
+                            <Table columns={columns} dataSource={listApply} />
                         </Col>
                     </Row>
 
                 </>
             }
-        }, [userLogin, data, dispatch, form, isModalVisible])
+        }, [listApply, dispatch, form, isModalVisible])
     return (
         <>
             {renderView()}

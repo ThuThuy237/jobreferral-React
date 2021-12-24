@@ -65,8 +65,8 @@ export default function InfoUser() {
         if (formData.get('cv') != null) { dispatch(actUploadCv(formData)); console.log(formData.get('cv')); }
     }
     const uploadCoverLetter = () => {
-        formLetter.append("coverLetter", file.originFileObj);
-        if (formLetter.get('coverLetter') != null) { dispatch(actUploadCoverLetter(formLetter)); }
+        if(letter != null){ formLetter.append("coverLetter", letter.originFileObj);}
+        if (formLetter.get('coverLetter') != null) { dispatch(actUploadCoverLetter(formLetter)); console.log(formData.get('cv')); }
     }
     return (
         <>
@@ -133,11 +133,11 @@ export default function InfoUser() {
                                         <Button style={{ margin: "15px auto" }} disabled type="primary" size="large" shape="round">Upload</Button>}
                                 </Col>
                             </Row>
-                            {userLogin.jobApplicant?.coverLetter ? <>
+                            {userLogin.jobApplicant?.cover_letter ? <>
                                 <Row justify="center">
                                     <Col span={18} style={{ textAlign: "center" }}>
                                         <h1>Preview</h1>
-                                        <iframe title="File" src={userLogin.jobApplicant?.coverLetter} width="100%" height="900px">
+                                        <iframe title="File" src={userLogin.jobApplicant?.cover_letter} width="100%" height="900px">
                                         </iframe>
                                     </Col>
                                 </Row>

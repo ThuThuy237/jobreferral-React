@@ -59,8 +59,27 @@ export const actUpNewPost = (data, history) => {
         })
     }
 }
+export const actUpdatePost = (data,id, history) => {
+    return async (dispatch) => {
+        await http_auth.patch(`post/${id}/`, data).then((rs) => {
+           Noti("Update post", "Uppdate success", "success");
+           history.goBack();
+        }).catch((err) => {
+            Noti("Update post", "Update failed", "error");
+        })
+    }
+}
 
-
+export const actGetReview = (id) => {
+    return async (dispatch) => {
+        dispatch(actionGetListReviewRequest());
+        await http.post(`apply/get-by-employer/`, {id: id}).then((rs) => {
+            dispatch(actionGetListReviewSuccess(rs.data));
+        }).catch((err) => {
+            dispatch(actionGetListReviewFailed(err));
+        })
+    }
+}
 const actionGetRecruiterRequest = () => {
     return {
         type: Type.GETRECRUITER_REQUEST
@@ -92,6 +111,23 @@ const actionGetListRecruiterSuccess = (data) => {
 const actionGetListRecruiterFailed = (err) => {
     return {
         type: Type.GETLISTRECRUITER_FAILED,
+        data: err
+    }
+}
+const actionGetListReviewRequest = () => {
+    return {
+        type: Type.GETLISTREVIEW_REQUEST
+    }
+}
+const actionGetListReviewSuccess = (data) => {
+    return {
+        type: Type.GETLISTREVIEW_SUCCESS,
+        data: data
+    }
+}
+const actionGetListReviewFailed = (err) => {
+    return {
+        type: Type.GETLISTREVIEW_FAILED,
         data: err
     }
 }

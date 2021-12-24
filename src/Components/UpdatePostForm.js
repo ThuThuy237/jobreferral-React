@@ -16,11 +16,11 @@ import {
 } from 'antd';
 import { InboxOutlined, EyeOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecruiter, actUpNewPost } from '../reducers/Recruiter/action';
-import ReviewPost from '../Components/ReviewPost'
+import { getRecruiter, actUpdatePost } from '../reducers/Recruiter/action';
+import ReviewPost from './ReviewPost'
 import { useHistory } from 'react-router-dom';
 
-export default function CreatePostForm() {
+export default function CreatePostForm(props) {
     const { Option } = Select;
     const [form] = Form.useForm();
     const formData = new FormData();
@@ -47,11 +47,18 @@ export default function CreatePostForm() {
         wrapperCol: { span: 18 },
     };
 
-    // const uploadImage = (e) => {
-    //     formData.set("image", e.file.originFileObj);
-    //     console.log(formData.get("image"));
-    // };
+    const [imgSrc, setImgSrc] = useState(props.obj?.image)
+    const handleChangeFile = async (info) => {
+        let file = info.fileList[0]
+        if (file) {
+            setImgSrc(URL.createObjectURL(file.originFileObj));
+        }
+        else {
+            setImgSrc(props.obj.image);
+        }
 
+
+    }
     const dummyRequest = ({ file, onSuccess }) => {
         setTimeout(() => {
             onSuccess("ok");
@@ -70,7 +77,7 @@ export default function CreatePostForm() {
             }
             // console.log(key, values[key]);
         }
-        dispatch(actUpNewPost(formData, history));
+        dispatch(actUpdatePost(formData, props.id, history));
     };
 
     useEffect(() => {
@@ -87,7 +94,7 @@ export default function CreatePostForm() {
                 labelAlign="left"
                 {...formItemLayout}
                 onFinish={onFinish}
-                initialValues={{
+                initialValues={props.obj? props.obj: {
                     'salary': "0",
                     'active': true,
                     'description': desData,
@@ -157,7 +164,7 @@ export default function CreatePostForm() {
 
                 <Form.Item label="Post image" valuePropName="file" name="image"
                     rules={[{ required: true, message: 'Please select image for post, you can upload your company logo!' }]}>
-                    <Upload.Dragger customRequest={dummyRequest} multiple={false} maxCount={1} accept='image/*'>
+                    <Upload.Dragger customRequest={dummyRequest} multiple={false} maxCount={1} accept='image/*' onChange={handleChangeFile}>
                         <p className="ant-upload-drag-icon">
                             <InboxOutlined />
                         </p>
@@ -165,7 +172,8 @@ export default function CreatePostForm() {
                         <p className="ant-upload-hint">Support for a single upload.</p>
                     </Upload.Dragger>
                 </Form.Item>
-
+                <div>Preview Images:</div>
+                <img style={{ width: 250 }} className="mb-4 mx-auto d-flex" src={imgSrc} alt="..." />
                 <Form.Item name="description" label="Description">
                     <CKEditor
                         editor={ClassicEditor}

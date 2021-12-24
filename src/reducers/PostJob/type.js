@@ -10,4 +10,7 @@ export const GETDETAIL_FAILED = 'GetDetailReducer/GETDETAIL_FAILED';
 export const GETOWNER_REQUEST = 'GetOwnerReducer/GETOWNER_REQUEST';
 export const GETOWNER_SUCCESS = 'GetOwnerReducer/GETOWNER_SUCCESS';
 export const GETOWNER_FAILED = 'GetOwnerReducer/GETOWNER_FAILED';
+export const GETAPPLICANTS_REQUEST = 'GetApplicantReducer/GETAPPLICANTS_REQUEST';
+export const GETAPPLICANTS_SUCCESS = 'GetApplicantReducer/GETAPPLICANTS_SUCCESS';
+export const GETAPPLICANTS_FAILED = 'GetApplicantReducer/GETAPPLICANTS_FAILED';
 export const PAGE_INFO = 'GetPostReducer/PAGE_INFO';

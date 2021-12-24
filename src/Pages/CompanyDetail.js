@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { useParams } from "react-router-dom";
-import { Row, Col, Divider, Avatar, Tabs, Rate, Pagination } from 'antd';
+import { Row, Col, Divider, Avatar, Tabs, Rate, Pagination, Comment } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecruiter } from '../reducers/Recruiter/action';
+import { actGetReview, getRecruiter } from '../reducers/Recruiter/action';
 import Loading from '../Components/Loading';
 import Error from '../Components/Error';
 import myStyles from '../Styles/CompanyDetail.module.scss';
@@ -18,11 +18,12 @@ const { TabPane } = Tabs;
 export default function CompanyDetail() {
     let { id } = useParams();
     const dispatch = useDispatch();
-    const { err, loading, recruiter } = useSelector(state => state.RecruiterReducer);
+    const { err, loading, recruiter, listReview } = useSelector(state => state.RecruiterReducer);
 
     useEffect(() => {
         const action = getRecruiter(id);
         dispatch(action);
+        dispatch(actGetReview(id));
     }, [dispatch, id])
 
     const renderPost = useCallback(
@@ -42,8 +43,8 @@ export default function CompanyDetail() {
 
                                 </div>
                                 <h3 className="text-center m-1">{recruiter.company_name}</h3>
-                                <p className="text-center m-0"><Rate disabled allowHalf defaultValue={2.5} /></p>
-                                <p className="text-muted text-center m-1">2.5 / 5</p>
+                                <p className="text-center m-0"><Rate disabled allowHalf defaultValue={recruiter.avg_rating} /></p>
+                                <p className="text-muted text-center m-1">{recruiter.avg_rating} / 5</p>
                             </div>
                             <div className="p-1 mb-5 mt-2">
 
@@ -117,7 +118,28 @@ export default function CompanyDetail() {
                                     }
                                     key="2"
                                 >
-                                    {recruiter.review? recruiter.review:<h3 className="text-center text-muted">No reviews</h3>}
+                                    {listReview? listReview.map((item, index) => {
+        return <Comment
+        key={index}
+        author={item.user.username}
+        avatar={<Avatar src={item.user.avatar} alt="Han Solo" />}
+        content={
+            <>
+            <Rate disabled defaultValue={item.stars} />
+            <p>{item.comment}</p>
+          </>
+          
+        }
+        datetime="12/12/2015"
+        //   <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
+        //     <span>{moment().fromNow()}</span>
+        //   </Tooltip>
+        
+      />
+      })
+                                    
+                                    
+                                    :<h3 className="text-center text-muted">No reviews</h3>}
                                 </TabPane>
                             </Tabs>
                         </Col>
@@ -125,7 +147,7 @@ export default function CompanyDetail() {
 
                 </>
             }
-        }, [recruiter, loading, err,])
+        }, [recruiter, loading, err, listReview])
     return (
         <div>
             {renderPost()}

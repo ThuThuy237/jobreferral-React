@@ -23,8 +23,12 @@ export default function ReviewPost(props) {
         if (!props.image) {
             setPreview(undefined)
             return
-        }else
+        }else if(typeof props.image === 'string' || props.image instanceof String){
+            setPreview(props.image);
+        }
+        else{
             setPreview(URL.createObjectURL(props.image.file.originFileObj));
+        }
     }, [props])
 
     const renderView = React.useCallback(() => {

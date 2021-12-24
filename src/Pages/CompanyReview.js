@@ -30,8 +30,8 @@ export default function CompanyReview() {
                                     <Col span={15} offset={1}>
                                         <h5 className="font-weight-bold">{item.company_name}</h5>
                                         <p className="text-muted">{item.contact_email}</p>
-                                        <p>Rating: <Rate disabled allowHalf defaultValue={4.5} /> </p>
-                                        <p>4.5 / 5</p>
+                                        <p>Rating: <Rate disabled allowHalf defaultValue={item.avg_rating} /> </p>
+                                        <p>{item.avg_rating} / 5</p>
                                     </Col>
                                 </Row>
                             </Card>

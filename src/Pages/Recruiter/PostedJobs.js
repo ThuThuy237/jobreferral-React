@@ -51,7 +51,7 @@ export default function PostedJobs() {
                         title: 'Title',
                         dataIndex: 'title',
                         key: 'title',
-                        render: text => <strong>{text}</strong>,
+                        render: (text, record) => <NavLink className="text-dark" to={`/recruiter/managePost/${record.id}`}><strong>{text}</strong></NavLink>,
                     },
                     {
                         title: 'Create date',
