@@ -69,8 +69,9 @@ export default function CreatePostForm(props) {
     }
     const onFinish = (values) => {
         for (let key in values) {
-            if (key === 'image') {
-                formData.append(key, values[key].file.originFileObj);
+            if (key === 'image' && values[key] !== null) {
+                if(values[key] instanceof File)
+                    formData.append(key, values[key].file.originFileObj);
             }
             else {
                 formData.append(key, values[key])
