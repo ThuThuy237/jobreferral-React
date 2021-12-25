@@ -66,7 +66,9 @@ export const deletePost = (id) => {
             Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
             dispatch(getOwnerPost());
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         });
     }
 }
@@ -76,7 +78,9 @@ export const actActive = (data) => {
         await http_auth.post('post/change-active/', data).then((rs) => {
             Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }

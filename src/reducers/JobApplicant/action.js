@@ -8,7 +8,9 @@ export const actGetListApply = () => {
             dispatch(actionGetListApplySuccess(rs.data));
         }).catch((err) => {
             dispatch(actionGetListApplyFailed({'Error': 'Get failed!'}));
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }

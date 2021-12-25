@@ -32,7 +32,9 @@ export const actChangeInfo = (user) => {
            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
            dispatch(getUserLogin());
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }
@@ -44,7 +46,9 @@ export const actChangeLogo = (user) => {
            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
            dispatch(getUserLogin());
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }

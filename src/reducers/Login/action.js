@@ -50,7 +50,9 @@ export const actChangeInfo = (user) => {
            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
         }).catch((err) => {
             dispatch(actionChangeInfoFailed({'Account info': 'Incorrect username or password'}));
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
             // console.log(err)
         })
         dispatch(actionLoginRequest());
@@ -69,7 +71,9 @@ export const actChangeAvatar = (user) => {
            dispatch(actionChangeInfoSuccess(rs));
            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
         dispatch(actionLoginRequest());
         await http_auth.get('user/current-user/').then((rs) => {
@@ -86,7 +90,9 @@ export const actUploadCv = (data) => {
            Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
            dispatch(getUserLogin())
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }
@@ -97,7 +103,9 @@ export const actUploadCoverLetter = (data) => {
             Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
             dispatch(getUserLogin());
          }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
          })
     }
 }
@@ -111,7 +119,7 @@ export const actRegister = (user, history) => {
             }
             dispatch( actLogin(data, history));
         }).catch((err) => {
-            dispatch(actionLoginFailed(err.response.data));
+            dispatch(actionLoginFailed(err.response));
         })
     }
 }
@@ -183,7 +191,9 @@ export const changePw = (data) => {
             Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
             // dispatch(getUserLogin());
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }

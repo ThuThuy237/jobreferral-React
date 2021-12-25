@@ -11,7 +11,11 @@ export const actApply = (id) => {
             Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
             dispatch(getUserLogin());
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }else{
+                Noti("Error", "Apply failed", "error");
+            }
         })
     }
 }
@@ -23,7 +27,9 @@ export const actRating = (data) => {
             dispatch(getUserLogin());
             Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }
@@ -33,7 +39,9 @@ export const actChangeStatus = (data, id) => {
             dispatch(getUserLogin());
             Noti(Object.keys(rs.data)[0], rs.data[Object.keys(rs.data)[0]], "success");
         }).catch((err) => {
-            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            if(err.response){
+                Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
+            }
         })
     }
 }
