@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import myStyles from '../Styles/RegisterStyle.module.scss';
 import { FcGoogle } from 'react-icons/fc';
-import { Form, Input, Button, Divider, notification } from 'antd';
+import { Form, Input, Button, Divider } from 'antd';
 import { actLoginGG, actRegister, getUserLogin } from '../reducers/Login/action';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ export default function Register() {
     const dispatch = useDispatch();
     let history = useHistory();
 
-    const { err, userLogin } = useSelector(state => state.LoginReducer);
+    const {userLogin } = useSelector(state => state.LoginReducer);
 
     useEffect(() => {
         dispatch(getUserLogin(history));
@@ -20,18 +20,18 @@ export default function Register() {
 
     const renderPage = React.useCallback(
         () => {
-            const openNotification = (mess, description) => {
-                notification.open({
-                    message: mess,
-                    description:
-                        description,
-                    placement: 'bottomRight',
-                    type: 'error',
-                    style: {
-                        width: 400,
-                    },
-                });
-            };
+            // const openNotification = (mess, description) => {
+            //     notification.open({
+            //         message: mess,
+            //         description:
+            //             description,
+            //         placement: 'bottomRight',
+            //         type: 'error',
+            //         style: {
+            //             width: 400,
+            //         },
+            //     });
+            // };
             const onFinish = (values) => {
                 const action = actRegister(values, history);
                 dispatch(action);
@@ -46,7 +46,7 @@ export default function Register() {
             }
 
             return <>
-                {err === null ? '' : openNotification(Object.keys(err)[0], err[Object.keys(err)[0]])}
+                {/* {err === null ? '' : openNotification(Object.keys(err)[0], err[Object.keys(err)[0]])} */}
                 {userLogin === null ? <>
                     <div className={myStyles.register}>
                         <div className={myStyles.registerContainer}>
@@ -138,7 +138,7 @@ export default function Register() {
                     </div>
                 </> : history.goBack()}
             </>
-        }, [err, userLogin, history, dispatch])
+        }, [ userLogin, history, dispatch])
     return (
         <>{renderPage()}</>
     )

@@ -6,7 +6,8 @@ import {
     Modal,
     Button,
     Space,
-    Switch
+    Switch,
+    Result
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../Styles/InfoUser.module.scss'
@@ -30,7 +31,16 @@ export default function PostedJobs() {
 
     const renderView = useCallback(
         () => {
-            if (recruiter) {
+            if (recruiter?.is_accepted === false) {return <Result
+                status="warning"
+                title="You are not allowed to accept this action."
+                extra={
+                  <NavLink to="/" className="btn btn-primary rounded">
+                    Go home
+                  </NavLink>
+                }
+              />}
+            if (recruiter?.is_accepted === true) {
                 const changeActive = (postId) => {
                     confirm({
                         title: 'Are you sure change active status this post?',

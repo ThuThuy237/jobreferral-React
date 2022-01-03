@@ -119,6 +119,7 @@ export const actRegister = (user, history) => {
             }
             dispatch( actLogin(data, history));
         }).catch((err) => {
+            Noti(Object.keys(err.response.data)[0], err.response.data[Object.keys(err.response.data)[0]], "error");
             dispatch(actionLoginFailed(err.response));
         })
     }

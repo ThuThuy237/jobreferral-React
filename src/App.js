@@ -4,6 +4,7 @@ import Register from './Pages/Register';
 import RegisterRecruiter from './Pages/RegisterRecruiter';
 import 'antd/dist/antd.css';
 import HomeTemplate from './Templates/HomeTemplate';
+import Forbidden from './Components/Forbidden';
 import UserTemplate from './Templates/UserTemplate';
 import RecruiterTemplate from './Templates/RecruiterTemplate';
 import {BrowserRouter , Route, Switch} from 'react-router-dom';
@@ -41,6 +42,7 @@ function App() {
         {/* <Route path="/user/:id" exact component={User} /> */}
         <Route path="/register" exact component={Register} />
         <Route path="/r-register" exact component={RegisterRecruiter} />
+        <Route component={Forbidden} />
       </Switch>
     </BrowserRouter>
   );
