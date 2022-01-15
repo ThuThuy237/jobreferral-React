@@ -36,7 +36,7 @@ export default function Footer() {
                 </Col>
             </Row>
             <Row justify="center" style={{paddingTop:'25px'}}>
-                <Col span={3}>&copy; 2021 Created by TT and BT</Col>
+                <Col span={3}>&copy; 2021 Created by TT</Col>
                 <Col span={3} offset={2}></Col>
                 <Col span={6} offset={2}>
                 <FacebookOutlined className={myStyles.icon} />

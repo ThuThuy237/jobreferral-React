@@ -95,14 +95,14 @@ export default function About() {
                     <div className={styles.line}></div>
                     <div className={styles.content}>
                         <Row justify={'space-around'} style={{width : '100%', marginTop:' 5px'}}>
-                            <Col xl={{span: 6}}>
+                            {/* <Col xl={{span: 6}}>
                                 <Card
                                     style={{ maxWidth: 300 }}
                                     cover={<img alt="example" src="https://png.pngtree.com/png-clipart/20200709/original/pngtree-initial-letter-b-logo-design-png-image_3579669.jpg" />}
                                 >
                                     Bảo Trân
                                 </Card>
-                            </Col>
+                            </Col> */}
                             <Col xl={{span: 6}}>
                                 <Card
                                     style={{ maxWidth: 300 }}
